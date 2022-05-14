@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'styles/style.css' %}"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
 
@@ -29,10 +29,10 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-md navbar-dark navbar-custom fixed-top">
         <!-- Text Logo - Use this if you don't have a graphic logo -->
-        <!-- <a class="navbar-brand logo-text page-scroll" href="index.html">Leno</a> -->
+    <a class="navbar-brand logo-text page-scroll" href="index.html">RAPP</a>
 
         <!-- Image Logo -->
-        <a class="navbar-brand logo-image" href="index.html">RAPP</a> 
+        <!-- <a class="navbar-brand logo-image" href="index.html">RAPP</a>  -->
         
         <!-- Mobile Menu Toggle Button -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +47,7 @@
                     <a class="nav-link page-scroll" href="#header">HOME <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="#features">FEATURES</a>
+                    <a class="nav-link page-scroll" href="#play">PLAY</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link page-scroll" href="#preview">PREVIEW</a>
@@ -71,10 +71,11 @@
         </div>
     </nav> <!-- end of navbar -->
     <!-- end of navbar -->
-
-
     {% block body %}
+
+
     {% endblock %}
+    
 <section class="foot">
     <footer class="footer">
         <div class="container">
