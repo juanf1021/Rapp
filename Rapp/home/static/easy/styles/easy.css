@@ -1,0 +1,53 @@
+:root{
+    --secondary-color: #3A2D80;
+    --main-color: #592ac5;
+	--third-color: #a408ff;
+    --black: #1A1C22;
+    --letter: #444444;
+    --white-color: #fdfdfd;
+    --border: .1rem solid rgba(255,255,255,.3);
+}
+.easy-container{
+    height: 80vh;
+    margin: 110px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center; 
+    position: relative;
+    
+}
+
+.easy-container .back-video{
+    object-fit: cover;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    border-radius: 15px;
+    filter: brightness(50%);
+}
+
+
+.easy-container .content h5{
+    font-size: 220px;
+    margin-top: 80px;
+}
+
+
+.easy-container .content p{
+    font-size: 70px;
+    margin-top: 120px;
+}
+
+.easy-container .content a{
+    margin:30px 10px;
+    font-size: 15px;
+}
+
+.easy-container .content a:hover{
+    color: var(--white-color);
+}

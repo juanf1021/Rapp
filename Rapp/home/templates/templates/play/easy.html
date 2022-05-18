@@ -1,0 +1,24 @@
+{% extends "layouts/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+
+<section>
+    <div class="easy-container">
+        <video autoplay loop muted plays-inline class="back-video">
+            <source src="{% static 'easy/media/videos/purple.mp4' %}" type="video/mp4">
+        </video>
+        <div class="content">
+           <h5>54</h2>
+           <p>TOMAR</p>
+           <div class="buttons">
+            <a class="btn-solid-lg page-scroll" href="">Play</a>
+            <a class="btn-solid-lg page-scroll" href="">Restart</a>
+           </div>
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}
