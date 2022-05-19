@@ -37,6 +37,11 @@
     margin-top: 80px;
 }
 
+.easy-container .content .damos{
+    margin-bottom: 70px;
+    display: none;
+    margin-top: -40px;
+}
 
 .easy-container .content p{
     font-size: 70px;

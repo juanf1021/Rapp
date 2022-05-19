@@ -10,15 +10,18 @@
             <source src="{% static 'easy/media/videos/purple.mp4' %}" type="video/mp4">
         </video>
         <div class="content">
-           <h5>54</h2>
-           <p>TOMAR</p>
-           <div class="buttons">
-            <a class="btn-solid-lg page-scroll" href="">Play</a>
-            <a class="btn-solid-lg page-scroll" href="">Restart</a>
+            <p class="damos" id="damos">SE LO DAMOS EN...</p>
+            <h5 id="seconds">60</h2>
+            <p>TOMAR</p>
+            <div class="buttons">
+            <a class="btn-solid-lg page-scroll" id="play">Play</a>
+            <a class="btn-solid-lg page-scroll" id="restart">Restart</a>
            </div>
         </div>
     </div>
 
+
+    <script src="{% static 'easy/js/timer.js' %}"></script>
 </section>
 
 {% endblock %}
