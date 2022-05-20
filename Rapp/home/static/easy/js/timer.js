@@ -2,38 +2,85 @@
 let count = 60;
 let seconds = document.getElementById("seconds");
 let time;
+let tiempo;
 let isPlaying = false;
 let startValue = 3;
 let btnPlay = document.getElementById("play");
 let damos = document.getElementById("damos");
+let audio = document.getElementById("audio");
+let palabra = document.getElementById("palabra");
+let countMusic = 0;
+let timeMusic;
 document.addEventListener("DOMContentLoaded", ()=>{
+    let audios = document.getElementById("audios");
+
+    // this check if there is a change on the audio Selection, if that happens
+    // it changes the src in html
+    audios.addEventListener('change', (evento) => {
+        let audio = document.getElementById("audio");
+        beat = evento.target.value;
+        audio.src = `/static/easy/audios/${beat}.mp3`
+        resetTimer();
+    })
+
+    // audio.addEventListener('timeupdate',function(){
+    //     redondeado = Math.round(audio.currentTime)
+    //     if (redondeado == 7) {
+    //          start();
+    //     }
+    //     console.log(redondeado);
+    // },false);
+
+
     btnPlay.addEventListener("click", ()=>{
     // when play bnt is clicked, checks if isPlaying is false and the play timer function start
     // if is playing is true and the bnt is clicked, the timer stop
         if(!isPlaying){
-            start();
+            audio.play();
+            musicStart()
             isPlaying = true;
             btnPlay.innerHTML = "Pause";
         }else{
-            pauseTimer();
             isPlaying = false;
             btnPlay.innerHTML = "Play";
-        }    
+            audio.pause();
+            pauseTimer();
+            pauseWords();
+        } 
     }
 )
-
+    // this restart everythin when that btn is clicked
     let btnRestart= document.getElementById("restart");
     btnRestart.addEventListener("click", ()=>{
             restartTimer();
             btnPlay.innerHTML = "Pause";
+            palabra.innerHTML = " ";
     })
 })
+
+// this make a request in words api to get a random word an run the showwordfunction
+function apiSearch(){
+    fetch('https://palabras-aleatorias-public-api.herokuapp.com/random')
+  .then(response => response.json())
+  .then(data =>{
+        showWord(data);
+  })
+  .catch(error=> console.log(error));
+}
+// take data from the fetch and place it in the html
+function showWord(data){
+    let palabra = document.getElementById("palabra");
+    palabraData = data.body.Word
+    palabra.innerHTML = palabraData.toUpperCase();
+}
+
 
 function displayTime(count){
     seconds.innerHTML = count;
     // update the timer html
 }
 
+// this start the 3 scds counter and then start the 60 scnds timer
 function start(){
     damos.style.display = "inline-block";
     displayTime(startValue);
@@ -52,9 +99,13 @@ function playTimer(){
     // if counter 0 then stop and make playbtn not visible
     if (count == 0){
         pauseTimer();
+        pauseWords();
         btnPlay.style.display = "none";
     }else{
     // update counter an run function every second
+        if (count % 10 == 0){
+            apiSearch();
+        }
         count--;
         time = setTimeout("playTimer()", 1000);
     }
@@ -65,136 +116,39 @@ function pauseTimer(){
     clearTimeout(time);
 }
 
+function restartValues(){
+    startValue = 3;
+    count = 60;
+}
+
 // this restart the timer and make the btn visible
 function restartTimer(){
     pauseTimer();
-    startValue = 3;
-    count = 60;
+    restartValues();
     start();
     isPlaying = true;
     btnPlay.style.display = "inline-block";
+    audio.pause();
+    audio.currentTime = 0;
+    audio.play()
 }
 
-// prueba
-// document.addEventListener("DOMContentLoaded", ()=>{
-//     let canicasBot = 10;
-//     let canicasPlayer = 10;
-//     let parBtn = document.getElementById("parBtn");
-//     let imparBtn = document.getElementById("imparBtn");
-//     let final = document.getElementById("final");
-//     let again = document.getElementById('again');
+// this reset the timer but dosnt play it
+function resetTimer(){
+    pauseTimer();
+    restartValues();
+    isPlaying = false;
+    btnPlay.innerHTML = "Play";
+    palabra.innerHTML = " ";
+}
 
-//     parBtn.addEventListener("click", ()=>{
-//     let par = esPar();
-//     let number = randomPoints();
-//     let estado = document.getElementById('estado');
-//     if(par){
-//         canicasBot = sumaPuntos(canicasBot, canicasPlayer, number)[1];
-//         canicasPlayer = sumaPuntos(canicasBot, canicasPlayer, number)[0];
-//         ganasteText(canicasBot, canicasPlayer, number)
-//         ganar(canicasPlayer);
-//     }else{
-//         canicasBot = restaPuntos(canicasBot, canicasPlayer, number)[1];
-//         canicasPlayer = restaPuntos(canicasBot, canicasPlayer, number)[0];
-//         perdisteText(canicasBot, canicasPlayer, number);
-//         perdiste(canicasBot);
-//     }
-// })
+function musicStart(){
+    if (countMusic == 7){
+        start()
+    }else{
+        countMusic++;
+        timeMusic = setTimeout("musicStart()", 1000);
+    }
+}
 
-// imparBtn.addEventListener("click", ()=>{
-//     let par = esPar();
-//     let number = randomPoints()
-//     if(!par){
-//         canicasBot = sumaPuntos(canicasBot, canicasPlayer, number)[1];
-//         canicasPlayer = sumaPuntos(canicasBot, canicasPlayer, number)[0];
-//         ganasteText(canicasBot, canicasPlayer, number)
-//         ganar(canicasPlayer);
-//     }else{
-//         canicasBot = restaPuntos(canicasBot, canicasPlayer, number)[1];
-//         canicasPlayer = restaPuntos(canicasBot, canicasPlayer, number)[0];
-//         perdisteText(canicasBot, canicasPlayer, number);
-//         perdiste(canicasBot);
-//     }
-// })
 
-// again.addEventListener("click", ()=>{
-//     estado.innerText = "";
-//     final.innerHTML = "";
-//     parBtn.style.display = 'block';
-//     imparBtn.style.display = 'block';
-//     again.style.display = "none";
-//     canicasBot = 10;
-//     canicasPlayer = 10;
-//     document.getElementById('botCan').innerHTML = canicasBot;
-//     document.getElementById('playerCan').innerHTML = canicasPlayer;
-// })
-
-// document.getElementById("botCan").innerHTML = canicasBot;
-// document.getElementById("playerCan").innerHTML = canicasPlayer;
-
-// })
-
-    
-// function esPar(){
-//    let number = Math.floor((Math.random() * (100 - 1 + 1)) + 1);
-//    if (number%2 == 0){
-//     return true
-//    }else{
-//        false
-//    }
-// }
-
-// function randomPoints(){
-//     let number = Math.floor((Math.random() * (5 - 1 + 1)) + 1);
-//     return number
-// }
-
-// function sumaPuntos(canicasBot, canicasPlayer, number){
-//     canicasPlayer = canicasPlayer + number;
-//     canicasBot = canicasBot - number;
-//     return [canicasPlayer, canicasBot]
-// }
-
-// function restaPuntos(canicasBot, canicasPlayer, number){
-//     canicasPlayer = canicasPlayer - number;
-//     canicasBot = canicasBot + number;
-//     return [canicasPlayer, canicasBot]
-// }
-
-// function ganasteText(canicasBot, canicasPlayer, number){
-//     texto = document.createTextNode(`Ganaste ${number} canica :)`);
-//     estado.innerHTML = "";
-//     estado.appendChild(texto);
-//     document.getElementById('botCan').innerHTML = canicasBot;
-//     document.getElementById('playerCan').innerHTML = canicasPlayer;
-// }
-
-// function perdisteText(canicasBot, canicasPlayer, number){
-//     texto = document.createTextNode(`Perdiste ${number} canica :(`);
-//     estado.innerHTML = "";
-//     estado.appendChild(texto);
-//     document.getElementById('botCan').innerHTML = canicasBot;
-//     document.getElementById('playerCan').innerHTML = canicasPlayer;
-// }
-
-// function ganar(canicasPlayer){
-//     if (canicasPlayer >= 20){
-//         texto = document.createTextNode("Ganaste!!!!!");
-//         btnNew(texto);
-//         again.style.display = "block";
-//     }
-// }
-
-// function perdiste(canicasBot){
-//     if(canicasBot >= 20){
-//         texto = document.createTextNode("Perdiste :((((")
-//         btnNew(texto)
-//         again.style.display = "block";
-//     }
-// }
-
-// function btnNew(texto){
-//     final.appendChild(texto);
-//     parBtn.style.display = "none";
-//     imparBtn.style.display = "none";
-// }
