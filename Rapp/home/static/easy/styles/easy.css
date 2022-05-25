@@ -56,3 +56,38 @@
 .easy-container .content a:hover{
     color: var(--white-color);
 }
+
+.easy-container .content .audio select{
+    appearance: none;
+    border: none;
+    padding: 0 1em 0 0;
+    margin: 0;
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+}
+
+.easy-container .content .audio select{
+    width: 100%;
+    min-width: 15ch;
+    max-width: 30ch;
+    border: 1px solid var(--main-color);
+    border-radius: 50px;
+    padding: 0.60em 0.5em;
+    font-size: 1.25rem;
+    cursor: pointer;
+    line-height: 1.1;
+    background-color: var(--main-color);
+    color: var(--white-color);
+    text-align: center;
+}
+
+.easy-container .content .audio select::after {
+    content: "";
+    width: 0.8em;
+    height: 0.5em;
+    background-color: var(--white-color);
+    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+  }

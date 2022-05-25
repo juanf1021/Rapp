@@ -11,14 +11,14 @@
         </video>
         <div class="content">
             <p class="damos" id="damos">SE LO DAMOS EN...</p>
-            <h5 id="seconds">60</h2>
+            <h5 id="seconds">START</h2>
             <p id="palabra"></p>
             <div class="buttons">
             <a class="btn-solid-lg page-scroll" id="play">Play</a>
             <a class="btn-solid-lg page-scroll" id="restart">Restart</a>
             <div class="audio">
-                <select name="audios" id="audios">
-                    <option value="beat-0">beat-0</option>
+                <select  class="audio-selection" name="audios" id="audios">
+                    <option value="beat-0" selected>beat-0</option>
                     <option value="beat-1">beat-1</option>
                 </select>
                 <audio src="{% static 'easy/audios/beat-0.mp3' %}" id="audio"></audio>
