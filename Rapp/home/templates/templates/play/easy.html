@@ -18,10 +18,14 @@
             <a class="btn-solid-lg page-scroll" id="restart">Restart</a>
             <div class="audio">
                 <select  class="audio-selection" name="audios" id="audios">
-                    <option value="beat-0" selected>beat-0</option>
-                    <option value="beat-1">beat-1</option>
+                    {% for beat in beats %}
+                        <option value="{{ beat.beat.url }}">{{ beat.beat }}</option>
+                    {% endfor %}
                 </select>
-                <audio src="{% static 'easy/audios/beat-0.mp3' %}" id="audio"></audio>
+                <!-- C:\Users\PC\Rapp\Rapp\media\media\beat-0.mp3 -->
+                <!-- <audio src="{% static 'easy/media/media/beat-0.mp3' %}" id="audio"></audio> -->
+                <audio src="{{ first.beat.url }}" id="audio"></audio>
+                <h1>{{ first.beat.url }}</h1>
             </div>
            </div>
         </div>

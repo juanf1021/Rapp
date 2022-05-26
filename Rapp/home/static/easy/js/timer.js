@@ -20,7 +20,7 @@ let audios = document.getElementById("audios");
     audios.addEventListener('change', (evento) => {
         let audio = document.getElementById("audio");
         beat = evento.target.value;
-        audio.src = `/static/easy/audios/${beat}.mp3`
+        audio.src = `${beat}`
         resetTimer();
         palabra.innerHTML = " "
     })
@@ -162,7 +162,7 @@ function musicStart(){
     if (countMusic == 8){
         start()
     }
-    if(countMusic == 75){
+    if(countMusic == 8){
         audio.pause();
         seconds.innerHTML = "TIEMPO!!!";
     }
