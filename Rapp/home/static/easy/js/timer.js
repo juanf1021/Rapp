@@ -32,7 +32,7 @@ let audios = document.getElementById("audios");
         if(!isPlaying){
             audio.play();
             if(firstClick == 1){
-                seconds.innerHTML = "PREPARATE";
+                seconds.innerHTML = "PREPÁRATE";
                 palabra.innerHTML = " ";
             }
             if(countMusic < 8){
@@ -139,7 +139,7 @@ function restartTimer(){
     pauseAllTimers();
     restartValues();
     musicStart();
-    seconds.innerHTML = "PREPARATE";
+    seconds.innerHTML = "PREPÁRATE";
     palabra.innerHTML = " ";
     isPlaying = true;
     btnPlay.style.display = "inline-block";
@@ -159,10 +159,13 @@ function resetTimer(){
 }
 
 function musicStart(){
+    if (countMusic == 7){
+        damos.style.display = "inline-block";
+    }
     if (countMusic == 8){
         start()
     }
-    if(countMusic == 8){
+    if(countMusic == 75){
         audio.pause();
         seconds.innerHTML = "TIEMPO!!!";
     }

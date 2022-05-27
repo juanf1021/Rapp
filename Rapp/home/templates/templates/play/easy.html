@@ -19,13 +19,12 @@
             <div class="audio">
                 <select  class="audio-selection" name="audios" id="audios">
                     {% for beat in beats %}
-                        <option value="{{ beat.beat.url }}">{{ beat.beat }}</option>
+                        <option value="{{ beat.beat.url }}">{{ beat.name }} - {{ beat.artist }}</option>
                     {% endfor %}
                 </select>
                 <!-- C:\Users\PC\Rapp\Rapp\media\media\beat-0.mp3 -->
                 <!-- <audio src="{% static 'easy/media/media/beat-0.mp3' %}" id="audio"></audio> -->
                 <audio src="{{ first.beat.url }}" id="audio"></audio>
-                <h1>{{ first.beat.url }}</h1>
             </div>
            </div>
         </div>
