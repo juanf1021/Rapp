@@ -3,6 +3,13 @@ from django.db import models
 # Create your models here.
 class Categoria(models.Model):
     categoria = models.CharField(max_length=100)
+    
+    class Meta:
+        verbose_name= "Categoria"
+        verbose_name_plural= "Categorias"
+
+    def __str__(self):
+        return self.categoria
 
 class Beats(models.Model):
     artist = models.CharField(max_length=200)
@@ -17,4 +24,4 @@ class Beats(models.Model):
         verbose_name_plural= "Beats"
 
     def __str__(self):
-        return self.name
+        return f"{self.name}  -  {self.artist}"

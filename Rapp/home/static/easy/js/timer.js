@@ -12,6 +12,8 @@ let palabra = document.getElementById("palabra");
 let countMusic = 0;
 let timeMusic;
 let firstClick = 0;
+
+
 document.addEventListener("DOMContentLoaded", ()=>{
 let audios = document.getElementById("audios");
 
@@ -19,15 +21,16 @@ let audios = document.getElementById("audios");
     // it changes the src in html
     audios.addEventListener('change', (evento) => {
         let audio = document.getElementById("audio");
-        beat = evento.target.value;
+        let beat = evento.target.value;
         audio.src = `${beat}`
         resetTimer();
-        palabra.innerHTML = " "
+        palabra.innerHTML = " ";
     })
 
     btnPlay.addEventListener("click", ()=>{
     // when play bnt is clicked, checks if isPlaying is false and the play timer function start
     // if is playing is true and the bnt is clicked, the timer stop
+    var estallido = audios.options[audios.selectedIndex].id;
         firstClick++;
         if(!isPlaying){
             audio.play();
@@ -35,11 +38,17 @@ let audios = document.getElementById("audios");
                 seconds.innerHTML = "PREPÁRATE";
                 palabra.innerHTML = " ";
             }
-            if(countMusic < 8){
+            if(startValue > 0 && startValue < 3){
+                start();
+                playMusicStart();
+                isPlaying = true;
+                btnPlay.innerHTML = "Pause";
+            }
+            else if(countMusic < (estallido - 3)){
                 musicStart();
             }
             else{
-                playMusicStart()
+                playMusicStart();
                 playTimer();
             }
             isPlaying = true;
@@ -104,7 +113,7 @@ function playTimer(){
     if (count == 0){
         btnPlay.style.display = "none";
         seconds.innerHTML = "ULTIMA!!!"
-        pauseTimer();
+        pauseTimer(time);
         pauseWords();
     }else{
     // update counter an run function every second
@@ -159,15 +168,19 @@ function resetTimer(){
 }
 
 function musicStart(){
-    if (countMusic == 7){
+    var estallido = audios.options[audios.selectedIndex].id;
+    estallido = parseInt(estallido);
+    if (countMusic == (estallido - 4)){
         damos.style.display = "inline-block";
+        seconds.innerHTML = " "
     }
-    if (countMusic == 8){
+    if (countMusic == (estallido - 3)){
         start()
     }
-    if(countMusic == 75){
+    if(countMusic == (70 + estallido)){
         audio.pause();
         seconds.innerHTML = "TIEMPO!!!";
+        palabra.innerHTML = " ";
     }
     else{ 
         timeMusic = setTimeout("musicStart()", 1000);
@@ -176,9 +189,12 @@ function musicStart(){
 }
 
 function playMusicStart(){
-    if(countMusic == 80){
+    var estallido = audios.options[audios.selectedIndex].id;
+    estallido = parseInt(estallido);
+    if(countMusic == (70 + estallido)){
         audio.pause();
         seconds.innerHTML = "TIEMPO!!!";
+        palabra.innerHTML = " ";
     }
     else{ 
         countMusic++;

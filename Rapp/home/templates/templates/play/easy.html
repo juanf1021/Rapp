@@ -19,7 +19,7 @@
             <div class="audio">
                 <select  class="audio-selection" name="audios" id="audios">
                     {% for beat in beats %}
-                        <option value="{{ beat.beat.url }}">{{ beat.name }} - {{ beat.artist }}</option>
+                        <option value="{{ beat.beat.url }}" id="{{ beat.estallido }}">{{ beat.name }} - {{ beat.artist }}</option>     
                     {% endfor %}
                 </select>
                 <!-- C:\Users\PC\Rapp\Rapp\media\media\beat-0.mp3 -->
@@ -33,5 +33,7 @@
 
     <script src="{% static 'easy/js/timer.js' %}"></script>
 </section>
+
+
 
 {% endblock %}

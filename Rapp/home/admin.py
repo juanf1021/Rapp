@@ -2,9 +2,13 @@ from django.contrib import admin
 from .models import Categoria, Beats
 # Register your models here.
 
+
 admin.site.register(Categoria)
 
 
 class Beats_admin(admin.ModelAdmin):
+    list_display=("artist", "name", "estallido")
     readonly_fields=('subido',)
+    search_fields= ("artist", "name")
+
 admin.site.register(Beats, Beats_admin)
