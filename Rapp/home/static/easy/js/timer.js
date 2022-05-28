@@ -37,12 +37,16 @@ let audios = document.getElementById("audios");
             if(firstClick == 1){
                 seconds.innerHTML = "PREPÁRATE";
                 palabra.innerHTML = " ";
+            }else{
+                count++;
+                countMusic--;
             }
             if(startValue > 0 && startValue < 3){
                 start();
                 playMusicStart();
                 isPlaying = true;
                 btnPlay.innerHTML = "Pause";
+                startValue++;
             }
             else if(countMusic < (estallido - 3)){
                 musicStart();
@@ -95,6 +99,7 @@ function displayTime(count){
 
 // this start the 3 scds counter and then start the 60 scnds timer
 function start(){
+    count = 60;
     damos.style.display = "inline-block";
     displayTime(startValue);
     if (startValue == 0){
