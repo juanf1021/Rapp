@@ -1,22 +1,29 @@
 // this is the initial value of the counter
 let count = 60;
-let seconds = document.getElementById("seconds");
 let time;
 let tiempo;
 let isPlaying = false;
 let startValue = 3;
+let countMusic = 0;
+let timeMusic;
+let firstClick = 0;
+let iterator = 0;
+let datos;
+let elementP;
+let textWord;
+// these are some elements
+let seconds = document.getElementById("seconds");
 let btnPlay = document.getElementById("play");
 let damos = document.getElementById("damos");
 let audio = document.getElementById("audio");
 let palabra = document.getElementById("palabra");
-let countMusic = 0;
-let timeMusic;
-let firstClick = 0;
+let lista = document.getElementById("lista");
 
-
+// this make the fetch request when the page is loaded
+apiSearchList();
+usedWords(datos);
 document.addEventListener("DOMContentLoaded", ()=>{
 let audios = document.getElementById("audios");
-
     // this check if there is a change on the audio Selection, if that happens
     // it changes the src in html
     audios.addEventListener('change', (evento) => {
@@ -34,13 +41,16 @@ let audios = document.getElementById("audios");
         firstClick++;
         if(!isPlaying){
             audio.play();
+            // if its the first click then change second for text 
             if(firstClick == 1){
                 seconds.innerHTML = "PREPÁRATE";
                 palabra.innerHTML = " ";
             }else{
+// this avoids changing the counter too fast whe btn is clicked many times
                 count++;
                 countMusic--;
             }
+    // this check if the program is in the 3 scnds timer
             if(startValue > 0 && startValue < 3){
                 start();
                 playMusicStart();
@@ -76,21 +86,51 @@ let audios = document.getElementById("audios");
 })
 
 // this make a request in words api to get a random word an run the showwordfunction
-function apiSearch(){
-    fetch('https://palabras-aleatorias-public-api.herokuapp.com/random')
+// function apiSearch(){
+//     fetch('https://palabras-aleatorias-public-api.herokuapp.com/random')
+//   .then(response => response.json())
+//   .then(data =>{
+//         showWord(data);
+//         console.log(data);
+//   })
+//   .catch(error=> console.log(error));
+// }
+
+function usedWords(data){
+    // for(let i = 0; i < 6 ; i++){
+    //     // elementP = document.createElement("p");
+    //     // let wordObject = datos.body[i];
+    //     // textWord = document.createTextNode(`la palabra es ${wordObject.Wor} y la definicion es ${wordObject.Definition}`);
+    //     // elementP.appendChild(textWord);d
+    //     // lista.appendChild(elementP);
+    //     // console.log(datos)
+    // }
+    let palabrota = data.body[0];
+    console.log(palabrota);
+}
+
+
+function apiSearchList(){
+    fetch('https://palabras-aleatorias-public-api.herokuapp.com/multiple-random')
   .then(response => response.json())
   .then(data =>{
-        showWord(data);
+        datos = data;
   })
   .catch(error=> console.log(error));
 }
+
 // take data from the fetch and place it in the html
-function showWord(data){
+// function showWord(data){
+//     let palabra = document.getElementById("palabra");
+//     palabraData = data.body.Word
+//     palabra.innerHTML = palabraData.toUpperCase();
+// }
+
+function showWordList(data, iterator){
     let palabra = document.getElementById("palabra");
-    palabraData = data.body.Word
+    let palabraData = data.body[iterator].Word;
     palabra.innerHTML = palabraData.toUpperCase();
 }
-
 
 function displayTime(count){
     seconds.innerHTML = count;
@@ -123,7 +163,8 @@ function playTimer(){
     }else{
     // update counter an run function every second
         if (count % 10 == 0){
-            apiSearch();
+            iterator++;
+            showWordList(datos, iterator);
         }
         count--;
         time = setTimeout("playTimer()", 1000);
