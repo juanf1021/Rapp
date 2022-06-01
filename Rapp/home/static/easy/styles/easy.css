@@ -91,3 +91,16 @@
     background-color: var(--white-color);
     clip-path: polygon(100% 0%, 0 0%, 50% 100%);
   }
+
+.used-words-container .full-word{
+    margin-left: 30px;
+}
+
+.used-words-container .full-word .word-element{
+    font-size: 35px;
+}
+
+.used-words-container .full-word .definition-element{
+    font-size: 20px;
+}
+

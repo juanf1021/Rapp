@@ -17,16 +17,14 @@ let btnPlay = document.getElementById("play");
 let damos = document.getElementById("damos");
 let audio = document.getElementById("audio");
 let palabra = document.getElementById("palabra");
-let lista = document.getElementById("lista");
+let wordContainerHtml = document.getElementById("wordContainerHtml");
 
 // this make the fetch request when the page is loaded
 apiSearchList();
 
-// here is a bug
-usedWords(datos);
 
 document.addEventListener("DOMContentLoaded", ()=>{
-let audios = document.getElementById("audios");
+    let audios = document.getElementById("audios");
     // this check if there is a change on the audio Selection, if that happens
     // it changes the src in html
     audios.addEventListener('change', (evento) => {
@@ -44,6 +42,8 @@ let audios = document.getElementById("audios");
         firstClick++;
         if(!isPlaying){
             audio.play();
+            // here is a bug
+            // usedWords(datos); 
             // if its the first click then change second for text 
             if(firstClick == 1){
                 seconds.innerHTML = "PREPÁRATE";
@@ -75,7 +75,6 @@ let audios = document.getElementById("audios");
             btnPlay.innerHTML = "Play";
             audio.pause();
             pauseAllTimers();
-            pauseWords();
         } 
     }
 )
@@ -99,20 +98,6 @@ let audios = document.getElementById("audios");
 //   .catch(error=> console.log(error));
 // }
 
-function usedWords(data){
-    // for(let i = 0; i < 6 ; i++){
-    //     // elementP = document.createElement("p");
-    //     // let wordObject = datos.body[i];
-    //     // textWord = document.createTextNode(`la palabra es ${wordObject.Wor} y la definicion es ${wordObject.Definition}`);
-    //     // elementP.appendChild(textWord);d
-    //     // lista.appendChild(elementP);
-    //     // console.log(datos)
-    // }
-    let palabrota = data.body[0];
-    console.log(palabrota);
-}
-
-
 function apiSearchList(){
     fetch('https://palabras-aleatorias-public-api.herokuapp.com/multiple-random')
   .then(response => response.json())
@@ -120,6 +105,28 @@ function apiSearchList(){
         datos = data;
   })
   .catch(error=> console.log(error));
+}
+
+
+function usedWords(data, iterator){
+        let wordContainer = document.createElement("div");
+        wordContainer.className = "full-word";
+        let wordElement = document.createElement("h6");
+        wordElement.className = "word-element";
+        let definitionElement = document.createElement("p");
+        definitionElement.className = "definition-element";
+        let wordObject = data.body[iterator].Word;
+        let wordDefinition = data.body[iterator].DefinitionMD;
+        let textDefinition = document.createTextNode(`${wordDefinition}`);
+        let textWord = document.createTextNode(`${wordObject}:`);
+        wordElement.appendChild(textWord);
+        definitionElement.appendChild(textDefinition);
+        wordContainerHtml.appendChild(wordContainer);
+        wordContainer.appendChild(wordElement);
+        wordContainer.appendChild(textDefinition);
+        console.log(data);
+//     // let palabrota = data.body[0].Word;
+//     console.log(data);
 }
 
 // take data from the fetch and place it in the html
@@ -162,12 +169,12 @@ function playTimer(){
         btnPlay.style.display = "none";
         seconds.innerHTML = "ULTIMA!!!"
         pauseTimer(time);
-        pauseWords();
     }else{
     // update counter an run function every second
         if (count % 10 == 0){
             iterator++;
             // here is a bug
+            usedWords(datos, iterator); 
             showWordList(datos, iterator);
         }
         count--;
@@ -251,5 +258,3 @@ function playMusicStart(){
         timeMusic = setTimeout("musicStart()", 1000);
     }
 }
-
-
