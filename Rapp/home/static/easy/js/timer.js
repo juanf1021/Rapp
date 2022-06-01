@@ -21,7 +21,10 @@ let lista = document.getElementById("lista");
 
 // this make the fetch request when the page is loaded
 apiSearchList();
+
+// here is a bug
 usedWords(datos);
+
 document.addEventListener("DOMContentLoaded", ()=>{
 let audios = document.getElementById("audios");
     // this check if there is a change on the audio Selection, if that happens
@@ -164,6 +167,7 @@ function playTimer(){
     // update counter an run function every second
         if (count % 10 == 0){
             iterator++;
+            // here is a bug
             showWordList(datos, iterator);
         }
         count--;
