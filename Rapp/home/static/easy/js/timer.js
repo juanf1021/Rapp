@@ -107,7 +107,7 @@ function apiSearchList(){
   .catch(error=> console.log(error));
 }
 
-
+// this functions shows the description of used words
 function usedWords(data, iterator){
         let wordContainer = document.createElement("div");
         wordContainer.className = "full-word";
@@ -117,7 +117,8 @@ function usedWords(data, iterator){
         definitionElement.className = "definition-element";
         let wordObject = data.body[iterator].Word;
         let wordDefinition = data.body[iterator].DefinitionMD;
-        let textDefinition = document.createTextNode(`${wordDefinition}`);
+        let cleanedDefinition = cleanDefinition(wordDefinition);
+        let textDefinition = document.createTextNode(`${cleanedDefinition}`);
         let textWord = document.createTextNode(`${wordObject}:`);
         wordElement.appendChild(textWord);
         definitionElement.appendChild(textDefinition);
@@ -128,6 +129,19 @@ function usedWords(data, iterator){
 //     // let palabrota = data.body[0].Word;
 //     console.log(data);
 }
+
+// this function clean the description received from api in order to make it shorter
+function cleanDefinition(definition){
+    let index = definition.indexOf(":");
+        for(index; index < definition.length; index ++){
+            if(definition.charAt(index) == "."){
+               let cleanedDefinition = definition.slice(0, index + 1)
+               return cleanedDefinition;
+            }
+        }
+    
+}
+
 
 // take data from the fetch and place it in the html
 // function showWord(data){
@@ -171,9 +185,10 @@ function playTimer(){
         pauseTimer(time);
     }else{
     // update counter an run function every second
+        let definition = "intr. Vacilar al hablar o al hacer una elección: titubea mucho al hablar en público. Quedarse perplejo en algún punto o materia, mostrando duda sobre lo que se debe hacer:<br><span class=>titubeó un poco, pero al final acabó resolviendo el problema. <li> Oscilar, perdiendo la estabilidad:<br><span class=>el borracho iba titubeando por la calle y acabó cayendo al suelo.</span><br> '**titubear**' ";
         if (count % 10 == 0){
             iterator++;
-            // here is a bug
+            cleanDefinition(definition);
             usedWords(datos, iterator); 
             showWordList(datos, iterator);
         }
