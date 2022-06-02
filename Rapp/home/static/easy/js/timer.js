@@ -11,6 +11,7 @@ let iterator = 0;
 let datos;
 let elementP;
 let textWord;
+let notdefined;
 // these are some elements
 let seconds = document.getElementById("seconds");
 let btnPlay = document.getElementById("play");
@@ -87,22 +88,12 @@ document.addEventListener("DOMContentLoaded", ()=>{
     })
 })
 
-// this make a request in words api to get a random word an run the showwordfunction
-// function apiSearch(){
-//     fetch('https://palabras-aleatorias-public-api.herokuapp.com/random')
-//   .then(response => response.json())
-//   .then(data =>{
-//         showWord(data);
-//         console.log(data);
-//   })
-//   .catch(error=> console.log(error));
-// }
-
 function apiSearchList(){
     fetch('https://palabras-aleatorias-public-api.herokuapp.com/multiple-random')
   .then(response => response.json())
   .then(data =>{
         datos = data;
+        console.log(data);
   })
   .catch(error=> console.log(error));
 }
@@ -116,16 +107,16 @@ function usedWords(data, iterator){
         let definitionElement = document.createElement("p");
         definitionElement.className = "definition-element";
         let wordObject = data.body[iterator].Word;
+        let wordObjectCapitalized = capitalize(wordObject);
         let wordDefinition = data.body[iterator].DefinitionMD;
         let cleanedDefinition = cleanDefinition(wordDefinition);
         let textDefinition = document.createTextNode(`${cleanedDefinition}`);
-        let textWord = document.createTextNode(`${wordObject}:`);
+        let textWord = document.createTextNode(`${wordObjectCapitalized}:`);
         wordElement.appendChild(textWord);
         definitionElement.appendChild(textDefinition);
         wordContainerHtml.appendChild(wordContainer);
         wordContainer.appendChild(wordElement);
         wordContainer.appendChild(textDefinition);
-        console.log(data);
 //     // let palabrota = data.body[0].Word;
 //     console.log(data);
 }
@@ -133,23 +124,31 @@ function usedWords(data, iterator){
 // this function clean the description received from api in order to make it shorter
 function cleanDefinition(definition){
     let index = definition.indexOf(":");
+    if(index == -1){
+        let index = definition.indexOf(".");
+        index++;
         for(index; index < definition.length; index ++){
             if(definition.charAt(index) == "."){
-               let cleanedDefinition = definition.slice(0, index + 1)
+               let cleanedDefinition = definition.slice(0, index + 1);
                return cleanedDefinition;
             }
         }
-    
+    }
+    else if(definition == ""){
+        let cleanedDefinition = "Sorry, something happened";
+        return cleanedDefinition
+    }else{
+        for(index; index < definition.length; index ++){
+            if(definition.charAt(index) == "."){
+               let cleanedDefinition = definition.slice(0, index + 1);
+               return cleanedDefinition;
+            }
+        }
+    } 
 }
 
 
-// take data from the fetch and place it in the html
-// function showWord(data){
-//     let palabra = document.getElementById("palabra");
-//     palabraData = data.body.Word
-//     palabra.innerHTML = palabraData.toUpperCase();
-// }
-
+// this changes the word displayed
 function showWordList(data, iterator){
     let palabra = document.getElementById("palabra");
     let palabraData = data.body[iterator].Word;
@@ -185,17 +184,36 @@ function playTimer(){
         pauseTimer(time);
     }else{
     // update counter an run function every second
-        let definition = "intr. Vacilar al hablar o al hacer una elección: titubea mucho al hablar en público. Quedarse perplejo en algún punto o materia, mostrando duda sobre lo que se debe hacer:<br><span class=>titubeó un poco, pero al final acabó resolviendo el problema. <li> Oscilar, perdiendo la estabilidad:<br><span class=>el borracho iba titubeando por la calle y acabó cayendo al suelo.</span><br> '**titubear**' ";
         if (count % 10 == 0){
             iterator++;
-            cleanDefinition(definition);
+            notdefined = isUndefined(datos,iterator);
+            if(notdefined){
+                iterator++;
+            }
             usedWords(datos, iterator); 
             showWordList(datos, iterator);
+            console.log(iterator)
         }
         count--;
         time = setTimeout("playTimer()", 1000);
     }
 }
+
+// this return true if definition of fetch is empty
+function isUndefined(data, iterator){
+    if (data.body[iterator].DefinitionMD == ""){
+        return true;
+    }else{
+        return false
+    }
+}
+
+// this capitalize the first letter
+function capitalize(word){
+    firstLetter = word.charAt(0).toUpperCase() + word.slice(1);
+    return firstLetter;
+}
+
 
 //This pause all the timers
 function pauseAllTimers(){
