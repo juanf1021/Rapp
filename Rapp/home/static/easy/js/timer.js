@@ -11,7 +11,7 @@ let iterator = 0;
 let datos;
 let elementP;
 let textWord;
-let notdefined;
+let notDefined;
 // these are some elements
 let seconds = document.getElementById("seconds");
 let btnPlay = document.getElementById("play");
@@ -110,6 +110,10 @@ function usedWords(data, iterator){
         let wordObjectCapitalized = capitalize(wordObject);
         let wordDefinition = data.body[iterator].DefinitionMD;
         let cleanedDefinition = cleanDefinition(wordDefinition);
+        if (typeof cleanedDefinition === 'undefined'){
+            cleanedDefinition = wordDefinition; 
+            console.log("funcionaaaaaaaaaa")
+        }
         let textDefinition = document.createTextNode(`${cleanedDefinition}`);
         let textWord = document.createTextNode(`${wordObjectCapitalized}:`);
         wordElement.appendChild(textWord);
@@ -134,7 +138,7 @@ function cleanDefinition(definition){
             }
         }
     }
-    else if(definition == ""){
+    else if(typeof definition === 'undefined'){
         let cleanedDefinition = "Sorry, something happened";
         return cleanedDefinition
     }else{
@@ -186,10 +190,11 @@ function playTimer(){
     // update counter an run function every second
         if (count % 10 == 0){
             iterator++;
-            notdefined = isUndefined(datos,iterator);
-            if(notdefined){
+            notDefined = isUndefined(datos,iterator);
+            if(notDefined){
                 iterator++;
             }
+            console.log(notDefined);
             usedWords(datos, iterator); 
             showWordList(datos, iterator);
             console.log(iterator)
@@ -203,8 +208,11 @@ function playTimer(){
 function isUndefined(data, iterator){
     if (data.body[iterator].DefinitionMD == ""){
         return true;
-    }else{
-        return false
+    }else if(data.body[iterator].DefinitionMD === 'undefined'){
+        return true;
+    }
+    else{
+        return false;
     }
 }
 
@@ -232,6 +240,7 @@ function restartValues(){
     firstClick = 0;
     countMusic = 0;
 }
+
 
 // this restart the timer and make the btn visible
 function restartTimer(){
