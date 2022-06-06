@@ -15,11 +15,12 @@ let notDefined;
 // these are some elements
 let seconds = document.getElementById("seconds");
 let btnPlay = document.getElementById("play");
+let btnRestart = document.getElementById("restart");
+btnRestart.style.display = "none";
 let damos = document.getElementById("damos");
 let audio = document.getElementById("audio");
 let palabra = document.getElementById("palabra");
 let wordContainerHtml = document.getElementById("wordContainerHtml");
-
 // this make the fetch request when the page is loaded
 apiSearchList();
 
@@ -43,9 +44,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
         firstClick++;
         if(!isPlaying){
             audio.play();
-            // here is a bug
-            // usedWords(datos); 
             // if its the first click then change second for text 
+            if (firstClick >= 1){
+                btnRestart.style.display = "inline-block";
+            }
             if(firstClick == 1){
                 seconds.innerHTML = "PREPÁRATE";
                 palabra.innerHTML = " ";
@@ -85,6 +87,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             restartTimer();
             btnPlay.innerHTML = "Pause";
             palabra.innerHTML = " ";
+            deleteDivChild(wordContainerHtml);
     })
 })
 
@@ -112,7 +115,6 @@ function usedWords(data, iterator){
         let cleanedDefinition = cleanDefinition(wordDefinition);
         if (typeof cleanedDefinition === 'undefined'){
             cleanedDefinition = wordDefinition; 
-            console.log("funcionaaaaaaaaaa")
         }
         let textDefinition = document.createTextNode(`${cleanedDefinition}`);
         let textWord = document.createTextNode(`${wordObjectCapitalized}:`);
@@ -194,7 +196,6 @@ function playTimer(){
             if(notDefined){
                 iterator++;
             }
-            console.log(notDefined);
             usedWords(datos, iterator); 
             showWordList(datos, iterator);
             console.log(iterator)
@@ -234,11 +235,22 @@ function pauseTimer(timeValue){
     clearTimeout(timeValue);
 }
 
+// this restart the values inside of it
 function restartValues(){
     startValue = 3;
     count = 60;
     firstClick = 0;
     countMusic = 0;
+}
+
+
+// this deletes all childs from a div
+function deleteDivChild(father){
+    let child = father.lastChild;
+    while(child){
+        father.removeChild(child);
+        child = father.lastElementChild;
+    }
 }
 
 
