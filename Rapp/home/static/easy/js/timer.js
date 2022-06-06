@@ -11,7 +11,8 @@ let iterator = 0;
 let datos;
 let elementP;
 let textWord;
-let notDefined;
+let notDefined = false;
+let definitionElement
 // these are some elements
 let seconds = document.getElementById("seconds");
 let btnPlay = document.getElementById("play");
@@ -30,11 +31,15 @@ document.addEventListener("DOMContentLoaded", ()=>{
     // this check if there is a change on the audio Selection, if that happens
     // it changes the src in html
     audios.addEventListener('change', (evento) => {
+        restartValues();
         let audio = document.getElementById("audio");
         let beat = evento.target.value;
-        audio.src = `${beat}`
+        audio.src = `${beat}`;
         resetTimer();
         palabra.innerHTML = " ";
+        btnRestart.style.display = "none";
+        btnPlay.style.display = "inline-block";
+        deleteDivChild(wordContainerHtml);
     })
 
     btnPlay.addEventListener("click", ()=>{
@@ -44,7 +49,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         firstClick++;
         if(!isPlaying){
             audio.play();
-            // if its the first click then change second for text 
+            // if its the first click then change second for text
             if (firstClick >= 1){
                 btnRestart.style.display = "inline-block";
             }
@@ -78,7 +83,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             btnPlay.innerHTML = "Play";
             audio.pause();
             pauseAllTimers();
-        } 
+        }
     }
 )
     // this restart everythin when that btn is clicked
@@ -107,24 +112,22 @@ function usedWords(data, iterator){
         wordContainer.className = "full-word";
         let wordElement = document.createElement("h6");
         wordElement.className = "word-element";
-        let definitionElement = document.createElement("p");
+        definitionElement = document.createElement("p");
         definitionElement.className = "definition-element";
         let wordObject = data.body[iterator].Word;
         let wordObjectCapitalized = capitalize(wordObject);
         let wordDefinition = data.body[iterator].DefinitionMD;
         let cleanedDefinition = cleanDefinition(wordDefinition);
         if (typeof cleanedDefinition === 'undefined'){
-            cleanedDefinition = wordDefinition; 
+            cleanedDefinition = wordDefinition;
         }
         let textDefinition = document.createTextNode(`${cleanedDefinition}`);
         let textWord = document.createTextNode(`${wordObjectCapitalized}:`);
         wordElement.appendChild(textWord);
-        definitionElement.appendChild(textDefinition);
+        definitionElement.innerHTML = cleanedDefinition;
         wordContainerHtml.appendChild(wordContainer);
         wordContainer.appendChild(wordElement);
-        wordContainer.appendChild(textDefinition);
-//     // let palabrota = data.body[0].Word;
-//     console.log(data);
+        wordContainer.appendChild(definitionElement);
 }
 
 // this function clean the description received from api in order to make it shorter
@@ -150,7 +153,7 @@ function cleanDefinition(definition){
                return cleanedDefinition;
             }
         }
-    } 
+    }
 }
 
 
@@ -192,11 +195,14 @@ function playTimer(){
     // update counter an run function every second
         if (count % 10 == 0){
             iterator++;
-            notDefined = isUndefined(datos,iterator);
+            // while(notDefined){
+            //     iterator++;
+            //     notDefined = isUndefined(datos,iterator);
+            // }
             if(notDefined){
-                iterator++;
+                iterator++
             }
-            usedWords(datos, iterator); 
+            usedWords(datos, iterator);
             showWordList(datos, iterator);
             console.log(iterator)
         }
@@ -209,7 +215,7 @@ function playTimer(){
 function isUndefined(data, iterator){
     if (data.body[iterator].DefinitionMD == ""){
         return true;
-    }else if(data.body[iterator].DefinitionMD === 'undefined'){
+    }else if(typeof data.body[iterator].DefinitionMD === 'undefined'){
         return true;
     }
     else{
@@ -227,7 +233,7 @@ function capitalize(word){
 //This pause all the timers
 function pauseAllTimers(){
     pauseTimer(time);
-    pauseTimer(timeMusic);  
+    pauseTimer(timeMusic);
 }
 
 // this pause the timer
@@ -293,7 +299,7 @@ function musicStart(){
         seconds.innerHTML = "TIEMPO!!!";
         palabra.innerHTML = " ";
     }
-    else{ 
+    else{
         timeMusic = setTimeout("musicStart()", 1000);
     }
     countMusic++;
@@ -307,7 +313,7 @@ function playMusicStart(){
         seconds.innerHTML = "TIEMPO!!!";
         palabra.innerHTML = " ";
     }
-    else{ 
+    else{
         countMusic++;
         timeMusic = setTimeout("musicStart()", 1000);
     }

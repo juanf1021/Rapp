@@ -97,13 +97,23 @@
     margin-bottom: 30px;
     border: 4px solid var(--main-color);
     padding: 40px;
+    margin-right: 50px;
+    border-radius: 10px;
+}
+
+.used-words-container .full-word:hover{
+    transform: translateY(-7px);
+    box-shadow: 0 10px 10px var(--main-color);
 }
 
 .used-words-container .full-word .word-element{
     font-size: 35px;
+    margin-bottom: 18px;
 }
 
 .used-words-container .full-word .definition-element{
-    font-size: 30px;
+    font-size: 25px;
+    color: var(--white-color);
+    line-height: 30px;
 }
 
