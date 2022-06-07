@@ -37,8 +37,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
         audio.src = `${beat}`;
         resetTimer();
         palabra.innerHTML = " ";
-        btnRestart.style.display = "none";
-        btnPlay.style.display = "inline-block";
+        nonVisible(btnRestart);
+        visible(btnPlay);
         deleteDivChild(wordContainerHtml);
     })
 
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             audio.play();
             // if its the first click then change second for text
             if (firstClick >= 1){
-                btnRestart.style.display = "inline-block";
+                visible(btnRestart);
             }
             if(firstClick == 1){
                 seconds.innerHTML = "PREPÁRATE";
@@ -172,11 +172,11 @@ function displayTime(count){
 // this start the 3 scds counter and then start the 60 scnds timer
 function start(){
     count = 60;
-    damos.style.display = "inline-block";
+    visible(damos);
     displayTime(startValue);
     if (startValue == 0){
         playTimer();
-        damos.style.display = "none";
+        nonVisible(damos);
     }else{
             startValue--;
             time = setTimeout("start()", 1000);
@@ -188,7 +188,7 @@ function playTimer(){
     displayTime(count);
     // if counter 0 then stop and make playbtn not visible
     if (count == 0){
-        btnPlay.style.display = "none";
+        nonVisible(btnPlay);
         seconds.innerHTML = "ULTIMA!!!"
         pauseTimer(time);
     }else{
@@ -204,7 +204,6 @@ function playTimer(){
             }
             usedWords(datos, iterator);
             showWordList(datos, iterator);
-            console.log(iterator)
         }
         count--;
         time = setTimeout("playTimer()", 1000);
@@ -229,6 +228,13 @@ function capitalize(word){
     return firstLetter;
 }
 
+function nonVisible(element){
+    element.style.display = "none";
+}
+
+function visible(element){
+    element.style.display = "inline-block";
+}
 
 //This pause all the timers
 function pauseAllTimers(){
@@ -268,7 +274,7 @@ function restartTimer(){
     seconds.innerHTML = "PREPÁRATE";
     palabra.innerHTML = " ";
     isPlaying = true;
-    btnPlay.style.display = "inline-block";
+    visible(btnPlay);
     audio.currentTime = 0;
     audio.play();
     btnPlay.innerHTML = "Pause";
@@ -288,7 +294,7 @@ function musicStart(){
     var estallido = audios.options[audios.selectedIndex].id;
     estallido = parseInt(estallido);
     if (countMusic == (estallido - 4)){
-        damos.style.display = "inline-block";
+        visible(damos);
         seconds.innerHTML = " "
     }
     if (countMusic == (estallido - 3)){
