@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         let beat = evento.target.value;
         audio.src = `${beat}`;
         resetTimer();
-        palabra.innerHTML = " ";
+        changeInner(palabra," ");
         nonVisible(btnRestart);
         visible(btnPlay);
         deleteDivChild(wordContainerHtml);
@@ -54,8 +54,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 visible(btnRestart);
             }
             if(firstClick == 1){
-                seconds.innerHTML = "PREPÁRATE";
-                palabra.innerHTML = " ";
+                changeInner(seconds, "PREPÁRATE");
+                changeInner(palabra, " ");
             }else{
 // this avoids changing the counter too fast whe btn is clicked many times
                 count++;
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 start();
                 playMusicStart();
                 isPlaying = true;
-                btnPlay.innerHTML = "Pause";
+                changeInner(btnPlay, "Pause");
                 startValue++;
             }
             else if(countMusic < (estallido - 3)){
@@ -77,10 +77,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 playTimer();
             }
             isPlaying = true;
-            btnPlay.innerHTML = "Pause";
+            changeInner(btnPlay, "Pause");
         }else{
             isPlaying = false;
-            btnPlay.innerHTML = "Play";
+            changeInner(btnPlay, "Play");
             audio.pause();
             pauseAllTimers();
         }
@@ -90,8 +90,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let btnRestart= document.getElementById("restart");
     btnRestart.addEventListener("click", ()=>{
             restartTimer();
-            btnPlay.innerHTML = "Pause";
-            palabra.innerHTML = " ";
+            changeInner(btnPlay, "Pause");
+            changeInner(palabra, " ");
             deleteDivChild(wordContainerHtml);
     })
 })
@@ -189,7 +189,7 @@ function playTimer(){
     // if counter 0 then stop and make playbtn not visible
     if (count == 0){
         nonVisible(btnPlay);
-        seconds.innerHTML = "ULTIMA!!!"
+        changeInner(seconds, "ULTIMA!!!");
         pauseTimer(time);
     }else{
     // update counter an run function every second
@@ -228,12 +228,18 @@ function capitalize(word){
     return firstLetter;
 }
 
+// this makes an element not visible
 function nonVisible(element){
     element.style.display = "none";
 }
 
+// this makes an element visible
 function visible(element){
     element.style.display = "inline-block";
+}
+
+function changeInner(element,text){
+    element.innerHTML = `${text}`    
 }
 
 //This pause all the timers
@@ -271,13 +277,13 @@ function restartTimer(){
     pauseAllTimers();
     restartValues();
     musicStart();
-    seconds.innerHTML = "PREPÁRATE";
-    palabra.innerHTML = " ";
+    changeInner(seconds, "PREPÁRATE");
+    changeInner(palabra, " ");
     isPlaying = true;
     visible(btnPlay);
     audio.currentTime = 0;
     audio.play();
-    btnPlay.innerHTML = "Pause";
+    changeInner(btnPlay, "Pause");
 }
 
 // this reset the timer but doesnt play it
@@ -285,9 +291,9 @@ function resetTimer(){
     pauseAllTimers();
     restartValues();
     isPlaying = false;
-    btnPlay.innerHTML = "Play";
-    palabra.innerHTML = " ";
-    seconds.innerHTML= "START";
+    changeInner(btnPlay, "Play");
+    changeInner(palabra, " ");
+    changeInner(seconds, "START");
 }
 
 function musicStart(){
@@ -295,15 +301,15 @@ function musicStart(){
     estallido = parseInt(estallido);
     if (countMusic == (estallido - 4)){
         visible(damos);
-        seconds.innerHTML = " "
+        changeInner(seconds, " ");
     }
     if (countMusic == (estallido - 3)){
         start()
     }
     if(countMusic == (70 + estallido)){
         audio.pause();
-        seconds.innerHTML = "TIEMPO!!!";
-        palabra.innerHTML = " ";
+        changeInner(seconds, "TIEMPO!!!");
+        changeInner(palabra, " ");
     }
     else{
         timeMusic = setTimeout("musicStart()", 1000);
@@ -316,8 +322,8 @@ function playMusicStart(){
     estallido = parseInt(estallido);
     if(countMusic == (70 + estallido)){
         audio.pause();
-        seconds.innerHTML = "TIEMPO!!!";
-        palabra.innerHTML = " ";
+        changeInner(seconds, "TIEMPO!!!");
+        changeInner(palabra, " ");
     }
     else{
         countMusic++;
