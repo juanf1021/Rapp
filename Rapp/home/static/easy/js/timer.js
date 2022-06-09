@@ -21,6 +21,7 @@ let btnRestart = document.getElementById("restart");
 btnRestart.style.display = "none";
 let damos = document.getElementById("damos");
 let audio = document.getElementById("audio");
+let gritoTiempo = document.getElementById("grito01");
 let palabra = document.getElementById("palabra");
 let wordContainerHtml = document.getElementById("wordContainerHtml");
 // this make the fetch request when the page is loaded
@@ -207,7 +208,7 @@ function playTimer(){
     // if counter 0 then stop and make playbtn not visible
     if (count == 0){
         nonVisible(btnPlay);
-        changeInner(seconds, "ULTIMA!!!");
+        changeInner(seconds, "ÚLTIMA!!!");
         pauseTimer(time);
     }else{
     // update counter an run function every second
@@ -324,8 +325,12 @@ function musicStart(){
     if (countMusic == (estallido - 3)){
         start()
     }
+    if(countMusic == ((70 + estallido)-3)){
+        gritoTiempo.play();
+    }
     if(countMusic == (70 + estallido)){
         audio.pause();
+        gritoTiempo.play();
         changeInner(seconds, "TIEMPO!!!");
         changeInner(palabra, " ");
     }
