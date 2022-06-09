@@ -16,14 +16,14 @@
             <div class="buttons">
             <a class="btn-solid-lg page-scroll" id="play">Play</a>
             <a class="btn-solid-lg page-scroll" id="restart">Restart</a>
+            <i class="fa-solid fa-volume-high" id="volume-icon"></i>
+            <input type="range" value="100" id="volume" class="range-volume">
             <div class="audio">
                 <select  class="audio-selection" name="audios" id="audios">
                     {% for beat in beats %}
-                        <option value="{{ beat.beat.url }}" id="{{ beat.estallido }}">{{ beat.name }} - {{ beat.artist }}</option>     
+                        <option class="beats"value="{{ beat.beat.url }}" id="{{ beat.estallido }}">{{ beat.name }} - {{ beat.artist }}</option>     
                     {% endfor %}
                 </select>
-                <!-- C:\Users\PC\Rapp\Rapp\media\media\beat-0.mp3 -->
-                <!-- <audio src="{% static 'easy/media/media/beat-0.mp3' %}" id="audio"></audio> -->
                 <audio src="{{ first.beat.url }}" id="audio"></audio>
             </div>
            </div>

@@ -12,7 +12,8 @@ let datos;
 let elementP;
 let textWord;
 let notDefined = false;
-let definitionElement
+let definitionElement;
+let actVolume;
 // these are some elements
 let seconds = document.getElementById("seconds");
 let btnPlay = document.getElementById("play");
@@ -32,7 +33,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     // it changes the src in html
     audios.addEventListener('change', (evento) => {
         restartValues();
-        let audio = document.getElementById("audio");
+        audio = document.getElementById("audio");
         let beat = evento.target.value;
         audio.src = `${beat}`;
         resetTimer();
@@ -93,6 +94,23 @@ document.addEventListener("DOMContentLoaded", ()=>{
             changeInner(btnPlay, "Pause");
             changeInner(palabra, " ");
             deleteDivChild(wordContainerHtml);
+    })
+
+    let volume = document.getElementById("volume");
+    volume.addEventListener('change', (evento) => {
+        actVolume = evento.target.value;
+        audio.volume = (actVolume / 100);
+    })
+    let volumeIcon = document.getElementById("volume-icon");
+    volumeIcon.addEventListener("mouseover", ()=> {
+        volumeIcon.style.display= "none";
+        nonVisible(volumeIcon);
+        visible(volume);
+    })
+
+    volume.addEventListener("mouseout", ()=> {
+        visible(volumeIcon);
+        nonVisible(volume);
     })
 })
 
