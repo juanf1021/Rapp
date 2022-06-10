@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         if (audio.volume < 0.3){
             volumeIcon.className = "fa-solid fa-volume-low";
         }
-        if(audio.volume < 0.1){
+        if(audio.volume === 0.0){
             volumeIcon.className = "fa-solid fa-volume-xmark";
         }
 

@@ -778,10 +778,11 @@ input[type='checkbox'] {
 	padding-top: 8.5rem;
 	padding-bottom: 7rem;
 	text-align: center;
+	height: 100vh;
 }
 
 .header .text-container {
-	margin-bottom: 3rem;
+	margin-bottom: 0%;
 }
 
 .header h1 {
@@ -795,6 +796,7 @@ input[type='checkbox'] {
 
 .header .p-large {
 	margin-bottom: 2rem;
+	font-size: 1.1rem;
 }
 
 .header .btn-solid-lg {
@@ -899,6 +901,7 @@ input[type='checkbox'] {
 		background-size: cover;
     	background-position: center;
 		padding: 0%;
+		margin-bottom: 10rem;
 	}
 
 	.select-container .container{
@@ -1013,6 +1016,15 @@ input[type='checkbox'] {
 			margin: 40px 0;
 		}
 	}
+	@media only screen and (min-width: 1400px){
+		.select-container .container .feature .content h3{
+			font-size: 2rem;
+		}
+		.select-container .container .feature .content a{
+			font-size: .8rem;
+			margin: 40px 0;
+		}
+	}
 	/* @media only screen and (max-width: 1800px){
 		.select-container .container .feature{
 			width: 18.5rem; 
@@ -1037,6 +1049,7 @@ input[type='checkbox'] {
 	footer .container{
 		max-width: 1170px;
 		margin: auto;
+		padding-bottom: 4rem;
 	}
 
 	footer .container .row{
@@ -1046,6 +1059,7 @@ input[type='checkbox'] {
 
 	footer .container .row .footer-col ul{
 		list-style: none;
+		padding: 0%;
 	}
 
 	footer .container .row .footer-col{
@@ -1083,7 +1097,7 @@ input[type='checkbox'] {
 		color: var(--white-color);
 		text-decoration: none;
 		font-weight: 300;
-		color: #bbbbbb;
+		color: var(--white-color);
 		display: block;
 		transition: all 0.3s ease;
 	}
@@ -1097,7 +1111,7 @@ input[type='checkbox'] {
 		display: inline-block;
 		height: 40px;
 		width: 40px;
-		background-color: rgb(255,255,255, 0.2);
+		background-color: var(--main-color);
 		margin: 0 10px 10px 0;
 		text-align: center;
 		line-height: 40px;
@@ -1316,7 +1330,7 @@ input[type='checkbox'] {
 	}
 
 	.header .text-container {
-		margin-top: 6.5rem;
+		margin-top: 0%;
 	}
 	/* end of header */
 
@@ -1466,7 +1480,6 @@ input[type='checkbox'] {
 }
 /* end of min-width width 992px */
 
-
 /* Min-width width 1200px */
 @media (min-width: 1200px) {
 
@@ -1491,7 +1504,7 @@ input[type='checkbox'] {
 	/* Header */
 	.header .text-container {
 		margin-top: 7.5rem;
-		margin-left: 2.5rem;
+		margin-left: 1rem;
 	}
 
 	.header .image-container {
@@ -1625,5 +1638,28 @@ input[type='checkbox'] {
 		margin-left: 1.75rem;
 	}
 	/* end of extra pages */
+}
+@media only screen and (min-width: 1400px){
+	.header .text-container {
+		margin-top: 4.4rem;
+		margin-left: 1.5rem;
+	}
+	.header .header-content {
+		padding-top: 10rem;
+	}
+}
+@media only screen and (min-width: 1800px){
+	.header .header-content {
+		padding-top: 16rem;
+	}
+}
+@media only screen and (min-width: 2000px){
+	.header .text-container {
+		margin-top: 7rem;
+		margin-left: 1.5rem;
+	}
+	.header .header-content {
+		padding-top: 16rem;
+	}
 }
 /* end of min-width width 1200px */
