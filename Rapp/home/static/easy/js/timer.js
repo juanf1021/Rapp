@@ -19,21 +19,26 @@ let seconds = document.getElementById("seconds");
 let btnPlay = document.getElementById("play");
 let btnRestart = document.getElementById("restart");
 btnRestart.style.display = "none";
-let damos = document.getElementById("damos");
 let audio = document.getElementById("audio");
 let gritoTiempo = document.getElementById("grito01");
 let palabra = document.getElementById("palabra");
 let wordContainerHtml = document.getElementById("wordContainerHtml");
+let ir = document.getElementById("ir");
+let volver = document.getElementById("volver");
 // this make the fetch request when the page is loaded
 apiSearchList();
 
 
 document.addEventListener("DOMContentLoaded", ()=>{
+    nonVisible(ir);
+    nonVisible(volver);
     let audios = document.getElementById("audios");
     // this check if there is a change on the audio Selection, if that happens
     // it changes the src in html
     audios.addEventListener('change', (evento) => {
         restartValues();
+        nonVisible(ir);
+        nonVisible(volver);
         audio = document.getElementById("audio");
         let beat = evento.target.value;
         audio.src = `${beat}`;
@@ -92,27 +97,43 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let btnRestart= document.getElementById("restart");
     btnRestart.addEventListener("click", ()=>{
             restartTimer();
+            nonVisible(ir);
             changeInner(btnPlay, "Pause");
             changeInner(palabra, " ");
             deleteDivChild(wordContainerHtml);
     })
-
+    let volumeIcon = document.getElementById("volume-icon");
     let volume = document.getElementById("volume");
     volume.addEventListener('change', (evento) => {
         actVolume = evento.target.value;
         audio.volume = (actVolume / 100);
+        gritoTiempo.volume = (actVolume / 100)
+        if (audio.volume > 0.3){
+            volumeIcon.className = "fa-solid fa-volume-high";
+        }
+        if (audio.volume < 0.3){
+            volumeIcon.className = "fa-solid fa-volume-low";
+        }
+        if(audio.volume < 0.1){
+            volumeIcon.className = "fa-solid fa-volume-xmark";
+        }
+
     })
-    let volumeIcon = document.getElementById("volume-icon");
+    
     volumeIcon.addEventListener("mouseover", ()=> {
-        volumeIcon.style.display= "none";
-        nonVisible(volumeIcon);
         visible(volume);
     })
 
     volume.addEventListener("mouseout", ()=> {
-        visible(volumeIcon);
         nonVisible(volume);
     })
+
+    ir.addEventListener("click", ()=> {
+        let lastChild = lastChildId(wordContainerHtml);
+        ir.href = `#${lastChild}`
+    })
+
+
 })
 
 function apiSearchList(){
@@ -129,6 +150,7 @@ function apiSearchList(){
 function usedWords(data, iterator){
         let wordContainer = document.createElement("div");
         wordContainer.className = "full-word";
+        wordContainer.id = `wordContainer${iterator}`;
         let wordElement = document.createElement("h6");
         wordElement.className = "word-element";
         definitionElement = document.createElement("p");
@@ -191,11 +213,9 @@ function displayTime(count){
 // this start the 3 scds counter and then start the 60 scnds timer
 function start(){
     count = 60;
-    visible(damos);
     displayTime(startValue);
     if (startValue == 0){
         playTimer();
-        nonVisible(damos);
     }else{
             startValue--;
             time = setTimeout("start()", 1000);
@@ -218,6 +238,8 @@ function playTimer(){
             //     iterator++;
             //     notDefined = isUndefined(datos,iterator);
             // }
+            visible(ir);
+            visible(volver);
             if(notDefined){
                 iterator++
             }
@@ -290,6 +312,12 @@ function deleteDivChild(father){
     }
 }
 
+function lastChildId(father){
+    let child = father.lastElementChild;
+    let lastChildId = child.id;
+    return lastChildId
+}
+
 
 // this restart the timer and make the btn visible
 function restartTimer(){
@@ -318,11 +346,12 @@ function resetTimer(){
 function musicStart(){
     var estallido = audios.options[audios.selectedIndex].id;
     estallido = parseInt(estallido);
-    if (countMusic == (estallido - 4)){
-        visible(damos);
-        changeInner(seconds, " ");
+    if (countMusic == (estallido - 5)){
+        seconds.style.fontSize = "150px";
+        changeInner(seconds, "SE LO DAMOS EN...");
     }
     if (countMusic == (estallido - 3)){
+        seconds.style.fontSize = "220px";
         start()
     }
     if(countMusic == ((70 + estallido)-3)){
@@ -330,7 +359,6 @@ function musicStart(){
     }
     if(countMusic == (70 + estallido)){
         audio.pause();
-        gritoTiempo.play();
         changeInner(seconds, "TIEMPO!!!");
         changeInner(palabra, " ");
     }

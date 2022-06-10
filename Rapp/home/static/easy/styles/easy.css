@@ -12,11 +12,11 @@
     margin: 110px 50px;
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     text-align: center; 
-    position: relative;
-    
+    position: relative; 
 }
 
 .easy-container .back-video{
@@ -31,21 +31,43 @@
     filter: brightness(50%);
 }
 
-
+.easy-container .content{
+  width: 100%;
+  /* display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: column; */
+}
 .easy-container .content h5{
     font-size: 220px;
-    margin-top: 80px;
 }
 
-.easy-container .content .damos{
-    margin-bottom: 70px;
+.easy-container .content .start-container{
+  margin-top: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.easy-container .content .seconds-container{
+  width: 100%;
+  height: 180px;
+}
+.easy-container .content .palabra-container{
+  width: 100%;
+  height: 60px;
+}
+
+
+.easy-container .content .damos-container .damos{
     display: none;
-    margin-top: -40px;
+    font-size: 70px;
 }
 
 .easy-container .content p{
     font-size: 70px;
-    margin-top: 120px;
 }
 
 .easy-container .content a{
@@ -55,6 +77,22 @@
 
 .easy-container .content a:hover{
     color: var(--white-color);
+}
+
+.easy-container .content .buttons{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.easy-container .content .buttons .btns-play{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+}
+.easy-container .content .buttons .audio{
+  align-self: center;
 }
 
 .easy-container .content .audio select{
@@ -333,12 +371,25 @@ input[type=range] {
     background: var(--main-color);
   }
 
+  .easy-container .content .buttons .btns-play .range-volume{
+    margin-left: 5px;
+  }
+  .btn-words{
+    margin-top: 70px;
+    width: 8px;
+  }
+  .btn-words .btn-solid-lg{
+    width: 40px;
+  }
 
-.fa-volume-high:hover{
-    display: none;
-}
+  .btn-words a{
+    padding: 10px;
+  }
 
-
-.easy-container .content .range-volume{
-  margin-right: -90px;
-}
+  .down-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 70px;
+  }
