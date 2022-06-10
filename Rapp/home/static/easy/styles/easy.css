@@ -393,3 +393,17 @@ input[type=range] {
     flex-direction: column;
     margin-bottom: 70px;
   }
+
+  @media only screen and (max-width: 1500px)  {
+    .easy-container .content .seconds-container{
+      height: 100px;
+    }
+
+    .easy-container .content .palabra-container{
+      height: 40px;
+    }
+
+    .easy-container .content .start-container{
+      margin-top: 150px;
+    }
+  }

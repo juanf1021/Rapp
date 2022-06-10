@@ -891,7 +891,7 @@ input[type='checkbox'] {
 	/*     select section  start */
 	/*****************************/
 
-
+	
 	.select-container{		
 		background:linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) ,url('/static/home/media/concert-2.jpg') no-repeat;
 		height: 100vh;
@@ -926,9 +926,16 @@ input[type='checkbox'] {
 	.select-container .container .feature .content{
 		width: 70%;
 		margin: 0 auto;
-		transition: transform .3s;
+		/* transition: transform .3s; */
 	}
 
+	.select-container .container .feature .content{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		flex-wrap: wrap;
+	}
 	.select-container .container .feature .feature-img{
 		position: absolute;
 		top: 0;
@@ -972,45 +979,50 @@ input[type='checkbox'] {
 
 	.select-container .container .feature:hover .content{
 		transform: scale(1.1);
-		transform-origin: left 50%;
 	}
 
 
-
-	@media (min-width: 1100px) {
-		.select-container .container .feature .content h3{
-			font-size: 2rem;
-		}
-
-		.select-container .container .feature img{
-			width: 400px;
-		}
-
+	/* selecto modes styling responsive */
+	@media only screen and (min-width: 1800px){
 		.select-container .container .feature{
-			width: 23.3rem; 
+			width: 23.3rem; 	
 		}
-		.select-container .container .feature .content a{
-			font-size: .9rem;
-		}
-	}
-
-	@media (min-width: 1900px) {
-		.select-container .container .feature .content h3{
-			font-size: 2.7rem;
-		}
-
 		.select-container .container .feature img{
 			width: 450px;
 		}
-
-		.select-container .container .feature{
-			width: 24.9rem; 
+		.select-container .container .feature .content h3{
+			font-size: 2.7rem;
 		}
-
 		.select-container .container .feature .content a{
-			font-size: 1.3rem;
+			font-size: .9rem;
+			margin: 40px 0;
 		}
 	}
+	@media only screen and (min-width: 2000px){
+		.select-container .container .feature{
+			width: 24.9rem; 	
+		}
+		.select-container .container .feature img{
+			width: 450px;
+		}
+		.select-container .container .feature .content h3{
+			font-size: 2.7rem;
+		}
+		.select-container .container .feature .content a{
+			font-size: .9rem;
+			margin: 40px 0;
+		}
+	}
+	/* @media only screen and (max-width: 1800px){
+		.select-container .container .feature{
+			width: 18.5rem; 
+		}
+		.select-container .container .feature h3{
+			color: #00c9db;
+		}
+	} */
+	/* end of select mode style responsive */
+
 	/*****************************/
 	/*     select section ends    */
 	/*****************************/
