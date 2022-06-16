@@ -25,6 +25,7 @@ let palabra = document.getElementById("palabra");
 let wordContainerHtml = document.getElementById("wordContainerHtml");
 let ir = document.getElementById("ir");
 let volver = document.getElementById("volver");
+let damos = document.getElementById("damos")
 // this make the fetch request when the page is loaded
 apiSearchList();
 
@@ -32,6 +33,7 @@ apiSearchList();
 document.addEventListener("DOMContentLoaded", ()=>{
     nonVisible(ir);
     nonVisible(volver);
+    nonVisible(damos);
     let audios = document.getElementById("audios");
     // this check if there is a change on the audio Selection, if that happens
     // it changes the src in html
@@ -347,11 +349,12 @@ function musicStart(){
     var estallido = audios.options[audios.selectedIndex].id;
     estallido = parseInt(estallido);
     if (countMusic == (estallido - 5)){
-        seconds.style.fontSize = "150px";
-        changeInner(seconds, "SE LO DAMOS EN...");
+        visible(damos);
+        nonVisible(seconds);
     }
     if (countMusic == (estallido - 3)){
-        seconds.style.fontSize = "220px";
+        visible(seconds);
+        nonVisible(damos);
         start()
     }
     if(countMusic == ((70 + estallido)-3)){

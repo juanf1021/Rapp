@@ -50,6 +50,12 @@
   justify-content: center;
 }
 
+.easy-container .content .start-container .seconds-container h6{
+  position: relative;
+  margin: 0;
+  font-size: 10rem;
+}
+
 
 .easy-container .content .seconds-container{
   width: 100%;
@@ -399,10 +405,22 @@ input[type=range] {
       height: 100px;
     }
 
-    .easy-container .content .palabra-container{
-      height: 40px;
+    .easy-container .content .start-container .seconds-container h6{
+      font-size: 8rem;
     }
 
+    .easy-container .content .start-container .seconds-container h5{
+      font-size: 13rem;
+    }
+
+    .easy-container .content .palabra-container{
+      height: auto;
+      margin-top: 3rem;
+    }
+
+    .btn-words{
+      margin-top: 10px;
+    }
     .easy-container .content .start-container{
       margin-top: 150px;
     }
