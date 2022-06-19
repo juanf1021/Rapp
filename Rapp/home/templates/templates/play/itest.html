@@ -15,8 +15,16 @@
     <link rel="stylesheet" href="{% static 'easy/styles/test.css' %}">
 </head>
 <body>
+    <div class="form-container" style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+        <h6 style="font-size: 3rem;">Do you want to add words to the database?</h6>
+        <form method="post" class="form" style="background-color: gainsboro; height: 20vh; display: flex; justify-content: center; align-items: center; width: 100%;">
+            {% csrf_token %}
+            <input type="submit" value="Add Word to Database" style="padding: 1rem;">
+        </form>
+        </div>  
+    
     <!-- start select section -->
-<section id="play">
+<!-- <section id="play">
     <div class="select-container">
     <div class="container">
         <div class="feature">
@@ -56,7 +64,7 @@
         </div>
     </div>
     </div>
-    </section>
+    </section> -->
     
     <!-- ends select section -->
 </body>
