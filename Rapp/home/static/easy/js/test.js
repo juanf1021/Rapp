@@ -1,8 +1,8 @@
 function fetchData(){
     fetch('/play/data')
-    .then(response => response.text()
-    .then(text =>{
-        console.log(text);
+    .then(response => response.json()
+    .then(data =>{
+        console.log(data[4][0]);
     }))
 }
 

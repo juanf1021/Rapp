@@ -4,6 +4,8 @@ from play.models import Words
 from home.models import Categoria, Beats
 from django.http import HttpResponse
 import random
+from django.http import JsonResponse
+import json
 # Create your views here.
 
 def easy(request):
@@ -16,15 +18,17 @@ def test(request):
 
 def word_list(request):
     # word = Words.objects.get(id = 25466)
-    # data = Words.objects.all()
-    # lista = []
-    # for i in range(10):
-    #     random_number = random.randint(0, len(data))
-    #     word = Words.objects.get(id = 100)
-    #     # lista.append(word)
-    # return HttpResponse(word)
-    Words.objects.all().delete()
-    return HttpResponse("deleted")
+    first_word = Words.objects.all().first()
+    last_word = Words.objects.all().last()
+    lista = []
+    for i in range(300):
+        random_number = random.randint(first_word.id, last_word.id)
+        word = Words.objects.filter(id = random_number).values()
+        lista.append(list(word))
+    return JsonResponse(lista, safe=False)
+    # return JsonResponse({"models_to_return": list(lista)})
+    # Words.objects.all().delete()
+    # return HttpResponse("deleted")
 
 
 def words(request):
