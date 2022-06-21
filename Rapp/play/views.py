@@ -30,6 +30,9 @@ def word_list(request):
     # Words.objects.all().delete()
     # return HttpResponse("deleted")
 
+def test_data(request):
+    data = Words.objects.filter(definition = "")
+    return HttpResponse(data)
 
 def words(request):
     found = False
@@ -45,6 +48,8 @@ def words(request):
                 except:
                     found = False
                 if found:
+                    i = i + 1
+                elif definition == "":
                     i = i + 1
                 else:
                     w = Words.objects.create(word = word, definition = definition)
