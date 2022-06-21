@@ -14,6 +14,9 @@ let textWord;
 let notDefined = false;
 let definitionElement;
 let actVolume;
+let wordObject;
+let wordDefinition;
+let palabraData;
 // these are some elements
 let seconds = document.getElementById("seconds");
 let btnPlay = document.getElementById("play");
@@ -139,17 +142,31 @@ document.addEventListener("DOMContentLoaded", ()=>{
 })
 
 function apiSearchList(){
-    fetch('https://palabras-aleatorias-public-api.herokuapp.com/multiple-random')
+    fetch('aleatorias-public-api.herokuapp.com/multiple-random')
   .then(response => response.json())
   .then(data =>{
         datos = data;
+        firstApiWorked = true;
+        console.log(firstApiWorked);
         console.log(data);
   })
-  .catch(error=> console.log(error));
+  .catch(error => fetchData());
+}
+
+function fetchData(){
+    fetch('/play/data')
+    .then(response => response.json())
+    .then(data =>{
+        datos = data;
+        firstApiWorked = false;
+        console.log(firstApiWorked);
+        console.log(data);
+    })
+    .catch(error => console.log(error));
 }
 
 // this functions shows the description of used words
-function usedWords(data, iterator){
+function usedWords(data, iterator, firstApiWorked){
         let wordContainer = document.createElement("div");
         wordContainer.className = "full-word";
         wordContainer.id = `wordContainer${iterator}`;
@@ -157,9 +174,17 @@ function usedWords(data, iterator){
         wordElement.className = "word-element";
         definitionElement = document.createElement("p");
         definitionElement.className = "definition-element";
-        let wordObject = data.body[iterator].Word;
+        if(firstApiWorked){
+            wordObject = data.body[iterator].Word;
+        }else{
+            wordObject = data[iterator][0].word;
+        }
         let wordObjectCapitalized = capitalize(wordObject);
-        let wordDefinition = data.body[iterator].DefinitionMD;
+        if(firstApiWorked){
+            wordDefinition = data.body[iterator].DefinitionMD;
+        }else{
+            wordDefinition = data[iterator][0].definition;
+        }
         let cleanedDefinition = cleanDefinition(wordDefinition);
         if (typeof cleanedDefinition === 'undefined'){
             cleanedDefinition = wordDefinition;
@@ -201,9 +226,14 @@ function cleanDefinition(definition){
 
 
 // this changes the word displayed
-function showWordList(data, iterator){
+function showWordList(data, iterator, firstApiWorked){
     let palabra = document.getElementById("palabra");
-    let palabraData = data.body[iterator].Word;
+    if(firstApiWorked){
+        palabraData = data.body[iterator].Word;
+    }else{
+        palabraData = data[iterator][0].word;
+    }
+    
     palabra.innerHTML = palabraData.toUpperCase();
 }
 
@@ -245,8 +275,8 @@ function playTimer(){
             if(notDefined){
                 iterator++
             }
-            usedWords(datos, iterator);
-            showWordList(datos, iterator);
+            usedWords(datos, iterator, firstApiWorked);
+            showWordList(datos, iterator, firstApiWorked);
         }
         count--;
         time = setTimeout("playTimer()", 1000);
