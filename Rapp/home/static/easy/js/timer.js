@@ -17,6 +17,8 @@ let actVolume;
 let wordObject;
 let wordDefinition;
 let palabraData;
+var firstApiWorked;
+let idCounter = 0;
 // these are some elements
 let seconds = document.getElementById("seconds");
 let btnPlay = document.getElementById("play");
@@ -29,6 +31,8 @@ let wordContainerHtml = document.getElementById("wordContainerHtml");
 let ir = document.getElementById("ir");
 let volver = document.getElementById("volver");
 let damos = document.getElementById("damos")
+let playRecorder = document.getElementById("play-recorder");
+
 // this make the fetch request when the page is loaded
 apiSearchList();
 
@@ -37,6 +41,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     nonVisible(ir);
     nonVisible(volver);
     nonVisible(damos);
+    nonVisible(playRecorder);
     let audios = document.getElementById("audios");
     // this check if there is a change on the audio Selection, if that happens
     // it changes the src in html
@@ -142,7 +147,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 })
 
 function apiSearchList(){
-    fetch('aleatorias-public-api.herokuapp.com/multiple-random')
+    fetch('https://palabras-aleatorias-public-api.herokuapp.com/multiple-random')
   .then(response => response.json())
   .then(data =>{
         datos = data;
@@ -157,8 +162,8 @@ function fetchData(){
     fetch('/play/data')
     .then(response => response.json())
     .then(data =>{
-        datos = data;
         firstApiWorked = false;
+        datos = data;
         console.log(firstApiWorked);
         console.log(data);
     })
@@ -414,3 +419,124 @@ function playMusicStart(){
         timeMusic = setTimeout("musicStart()", 1000);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// this part is fully about the audio recorder
+
+jQuery(document).ready(function () {
+    var $ = jQuery;
+    var myRecorder = {
+        objects: {
+            context: null,
+            stream: null,
+            recorder: null
+        },
+        init: function () {
+            if (null === myRecorder.objects.context) {
+                myRecorder.objects.context = new (
+                        window.AudioContext || window.webkitAudioContext
+                        );
+            }
+        },
+        start: function () {
+            var options = {audio: true, video: false};
+            navigator.mediaDevices.getUserMedia(options).then(function (stream) {
+                myRecorder.objects.stream = stream;
+                myRecorder.objects.recorder = new Recorder(
+                        myRecorder.objects.context.createMediaStreamSource(stream),
+                        {numChannels: 1}
+                );
+                myRecorder.objects.recorder.record();
+            }).catch(function (err) {});
+        },
+        stop: function (listObject) {
+            if (null !== myRecorder.objects.stream) {
+                myRecorder.objects.stream.getAudioTracks()[0].stop();
+            }
+            if (null !== myRecorder.objects.recorder) {
+                myRecorder.objects.recorder.stop();
+
+                // Validate object
+                if (null !== listObject
+                        && 'object' === typeof listObject
+                        && listObject.length > 0) {
+                    // Export the WAV file
+                    myRecorder.objects.recorder.exportWAV(function (blob) {
+                        var url = (window.URL || window.webkitURL)
+                                .createObjectURL(blob);
+
+                        // Prepare the playback
+                        var audioObject = $('<audio controls></audio>')
+                                .attr('src', url)
+                                .attr('id', `recorder-${idCounter}`);
+
+                        // Prepare the download link
+                        var downloadObject = $('<a class="download"><i class="fa-solid fa-download" ></i></a>')
+                                .attr('href', url)
+                                .attr('id', `download-${idCounter}`)
+                                .attr('download', new Date().toUTCString() + '.wav');
+
+                        // Wrap everything in a row
+                        var holderObject = $('<div class="row"></div>')
+                                .append(audioObject)
+                                .append(downloadObject);
+
+                        // Append to the list
+                        listObject.append(holderObject);
+                    });
+                }
+            }
+        }
+    };
+
+    // Prepare the recordings list
+    var listObject = $('[data-role="recordings"]');
+
+    // Prepare the record button
+    $('[data-role="controls"] > button').click(function () {
+        // Initialize the recorder
+        myRecorder.init();
+
+        // Get the button state 
+        var buttonState = !!$(this).attr('data-recording');
+
+        // Toggle
+        if (!buttonState) {
+            $(this).attr('data-recording', 'true');
+            myRecorder.start();
+        } else {
+            $(this).attr('data-recording', '');
+            myRecorder.stop(listObject);
+            $('.download').css({
+                'display': 'none',
+                'margin' : '0px',
+                'padding' : '0px'
+            });
+            $('.row').css({
+                'padding' : '0px'
+            });
+            let downloadObject = document.getElementById(`download-${idCounter}`)
+            visible(playRecorder);
+            $("#play-recorder").click(()=>{
+                let testAudio = document.getElementById(`recorder-${idCounter}`);
+                testAudio.play();
+            })
+            idCounter = idCounter + 1;
+        }
+    });
+});

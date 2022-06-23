@@ -381,7 +381,7 @@ input[type=range] {
     margin-left: 5px;
   }
   .btn-words{
-    margin-top: 70px;
+    /* margin-top: 10px; */
     width: 8px;
   }
   .btn-words .btn-solid-lg{
@@ -418,10 +418,64 @@ input[type=range] {
       margin-top: 3rem;
     }
 
-    .btn-words{
-      margin-top: 10px;
-    }
+
     .easy-container .content .start-container{
       margin-top: 150px;
-    }
+    } 
   }
+
+
+
+
+/* recorder */
+.audio .record-btns{
+  height: 100px;
+}
+.audio .record-btns .btn-solid-lg{
+  padding: 15px 8px;
+}
+.audio .record-btns .fa-play{
+  font-size: 1rem;
+}
+[data-role="controls"] > button {
+  border: none;
+  background: none;
+  color: var(--white-color);
+  margin-left: 5px;
+}
+
+[data-role="controls"] > button:hover {
+  background-color: var(--main-color);
+  border-radius: 20px;
+}
+[data-role="controls"] > button[data-recording="true"] {
+  border: none;
+  background-color: #ff2038;
+  border-radius: 20px;
+}
+[data-role="recordings"] > .row {
+  width: auto;
+  height: auto;
+  padding: 20px;
+}
+[data-role="recordings"] > .row > audio {
+  outline: none;
+  visibility: hidden;
+  display: none;
+}
+
+[data-role="recordings"] > .row > a:hover {
+  text-decoration: none;
+}
+
+.record-btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+/* [data-role="recordings"] > .row > a:active {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#0093E9), to(#80D0C7));
+  background-image: -o-linear-gradient(top, #0093E9 0%, #80D0C7 100%);
+  background-image: linear-gradient(180deg, #0093E9 0%, #80D0C7 100%);
+} */

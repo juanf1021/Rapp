@@ -16,6 +16,9 @@ def easy(request):
 def test(request):
     return render(request,"templates\play\itest.html")
 
+def mic_test(request):
+    return render(request,"templates\play\mictest.html")
+
 def word_list(request):
     # word = Words.objects.get(id = 25466)
     first_word = Words.objects.all().first()
