@@ -9,7 +9,7 @@
 }
 .easy-container{
     height: 80vh;
-    margin: 110px 50px;
+    margin: 100px 30px 50px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -400,7 +400,7 @@ input[type=range] {
     margin-bottom: 70px;
   }
 
-  @media only screen and (max-width: 1500px)  {
+  @media only screen and (max-width: 1600px)  {
     .easy-container .content .seconds-container{
       height: 100px;
     }
@@ -479,3 +479,11 @@ input[type=range] {
   background-image: -o-linear-gradient(top, #0093E9 0%, #80D0C7 100%);
   background-image: linear-gradient(180deg, #0093E9 0%, #80D0C7 100%);
 } */
+
+
+.ir-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  margin-bottom: 40px;
+}
