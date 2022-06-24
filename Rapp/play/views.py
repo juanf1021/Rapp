@@ -1,3 +1,5 @@
+from ctypes.wintypes import WORD
+import numbers
 from django.shortcuts import render
 import requests
 from play.models import Words
@@ -24,11 +26,16 @@ def word_list(request):
     first_word = Words.objects.all().first()
     last_word = Words.objects.all().last()
     lista = []
+    number = first_word.id
     for i in range(300):
         random_number = random.randint(first_word.id, last_word.id)
         word = Words.objects.filter(id = random_number).values()
+        while not word:
+            random_number = random.randint(first_word.id, last_word.id)
+            word = Words.objects.filter(id = random_number).values()
         lista.append(list(word))
     return JsonResponse(lista, safe=False)
+
     # return JsonResponse({"models_to_return": list(lista)})
     # Words.objects.all().delete()
     # return HttpResponse("deleted")

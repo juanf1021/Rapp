@@ -18,7 +18,7 @@ let wordObject;
 let wordDefinition;
 let palabraData;
 var firstApiWorked;
-let idCounter = 0;
+let idCounter = 1;
 // these are some elements
 let seconds = document.getElementById("seconds");
 let btnPlay = document.getElementById("play");
@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     volume.addEventListener('change', (evento) => {
         actVolume = evento.target.value;
         audio.volume = (actVolume / 100);
-        gritoTiempo.volume = (actVolume / 100)
+        gritoTiempo.volume = (actVolume / 100);
         if (audio.volume > 0.3){
             volumeIcon.className = "fa-solid fa-volume-high";
         }
@@ -270,19 +270,17 @@ function playTimer(){
     }else{
     // update counter an run function every second
         if (count % 10 == 0){
-            iterator++;
-            // while(notDefined){
-            //     iterator++;
-            //     notDefined = isUndefined(datos,iterator);
-            // }
             visible(ir);
             visible(volver);
-            if(notDefined){
-                iterator++
+            notDefined = isUndefined(datos, iterator)
+            while(notDefined){
+                iterator++;
+                notDefined = isUndefined(datos,iterator);
             }
             usedWords(datos, iterator, firstApiWorked);
             showWordList(datos, iterator, firstApiWorked);
         }
+        iterator++;
         count--;
         time = setTimeout("playTimer()", 1000);
     }
@@ -438,105 +436,125 @@ function playMusicStart(){
 
 // this part is fully about the audio recorder
 
-jQuery(document).ready(function () {
-    var $ = jQuery;
-    var myRecorder = {
-        objects: {
-            context: null,
-            stream: null,
-            recorder: null
-        },
-        init: function () {
-            if (null === myRecorder.objects.context) {
-                myRecorder.objects.context = new (
-                        window.AudioContext || window.webkitAudioContext
-                        );
-            }
-        },
-        start: function () {
-            var options = {audio: true, video: false};
-            navigator.mediaDevices.getUserMedia(options).then(function (stream) {
-                myRecorder.objects.stream = stream;
-                myRecorder.objects.recorder = new Recorder(
-                        myRecorder.objects.context.createMediaStreamSource(stream),
-                        {numChannels: 1}
-                );
-                myRecorder.objects.recorder.record();
-            }).catch(function (err) {});
-        },
-        stop: function (listObject) {
-            if (null !== myRecorder.objects.stream) {
-                myRecorder.objects.stream.getAudioTracks()[0].stop();
-            }
-            if (null !== myRecorder.objects.recorder) {
-                myRecorder.objects.recorder.stop();
 
-                // Validate object
-                if (null !== listObject
-                        && 'object' === typeof listObject
-                        && listObject.length > 0) {
-                    // Export the WAV file
-                    myRecorder.objects.recorder.exportWAV(function (blob) {
-                        var url = (window.URL || window.webkitURL)
-                                .createObjectURL(blob);
-
-                        // Prepare the playback
-                        var audioObject = $('<audio controls></audio>')
-                                .attr('src', url)
-                                .attr('id', `recorder-${idCounter}`);
-
-                        // Prepare the download link
-                        var downloadObject = $('<a class="download"><i class="fa-solid fa-download" ></i></a>')
-                                .attr('href', url)
-                                .attr('id', `download-${idCounter}`)
-                                .attr('download', new Date().toUTCString() + '.wav');
-
-                        // Wrap everything in a row
-                        var holderObject = $('<div class="row"></div>')
-                                .append(audioObject)
-                                .append(downloadObject);
-
-                        // Append to the list
-                        listObject.append(holderObject);
-                    });
+document.addEventListener("DOMContentLoaded", ()=>{
+    jQuery(document).ready(function () {
+        var $ = jQuery;
+        var myRecorder = {
+            objects: {
+                context: null,
+                stream: null,
+                recorder: null
+            },
+            init: function () {
+                if (null === myRecorder.objects.context) {
+                    myRecorder.objects.context = new (
+                            window.AudioContext || window.webkitAudioContext
+                            );
+                }
+            },
+            start: function () {
+                var options = {audio: true, video: false};
+                navigator.mediaDevices.getUserMedia(options).then(function (stream) {
+                    myRecorder.objects.stream = stream;
+                    myRecorder.objects.recorder = new Recorder(
+                            myRecorder.objects.context.createMediaStreamSource(stream),
+                            {numChannels: 1}
+                    );
+                    myRecorder.objects.recorder.record();
+                }).catch(function (err) {});
+            },
+            stop: function (listObject) {
+                if (null !== myRecorder.objects.stream) {
+                    myRecorder.objects.stream.getAudioTracks()[0].stop();
+                }
+                if (null !== myRecorder.objects.recorder) {
+                    myRecorder.objects.recorder.stop();
+    
+                    // Validate object
+                    if (null !== listObject
+                            && 'object' === typeof listObject
+                            && listObject.length > 0) {
+                        // Export the WAV file
+                        myRecorder.objects.recorder.exportWAV(function (blob) {
+                            var url = (window.URL || window.webkitURL)
+                                    .createObjectURL(blob);
+    
+                            // Prepare the playback
+                            var audioObject = $('<audio controls></audio>')
+                                    .attr('src', url)
+                                    .attr('id', `recorder-${idCounter}`);
+    
+                            // Prepare the download link
+                            var downloadObject = $('<a class="download"><i class="fa-solid fa-download" ></i></a>')
+                                    .attr('href', url)
+                                    .attr('id', `download-${idCounter}`)
+                                    .attr('download', new Date().toUTCString() + '.wav');
+    
+                            // Wrap everything in a row
+                            var holderObject = $('<div class="row"></div>')
+                                    .append(audioObject)
+                                    .append(downloadObject);
+    
+                            // Append to the list
+                            listObject.append(holderObject);
+                        });
+                    }
                 }
             }
-        }
-    };
-
-    // Prepare the recordings list
-    var listObject = $('[data-role="recordings"]');
-
-    // Prepare the record button
-    $('[data-role="controls"] > button').click(function () {
-        // Initialize the recorder
-        myRecorder.init();
-
-        // Get the button state 
-        var buttonState = !!$(this).attr('data-recording');
-
-        // Toggle
-        if (!buttonState) {
-            $(this).attr('data-recording', 'true');
-            myRecorder.start();
-        } else {
-            $(this).attr('data-recording', '');
-            myRecorder.stop(listObject);
-            $('.download').css({
-                'display': 'none',
-                'margin' : '0px',
-                'padding' : '0px'
+        };
+    
+        // Prepare the recordings list
+        var listObject = $('[data-role="recordings"]');
+    
+        // Prepare the record button
+        $('[data-role="controls"] > button').click(function () {
+            // Initialize the recorder
+            myRecorder.init();
+    
+            // Get the button state 
+            var buttonState = !!$(this).attr('data-recording');
+    
+            // Toggle
+            if (!buttonState) {
+                $(this).attr('data-recording', 'true');
+                myRecorder.start();
+            } else {
+                $(this).attr('data-recording', '');
+                myRecorder.stop(listObject);
+                $('.download').css({
+                    'display': 'none',
+                    'margin' : '0px',
+                    'padding' : '0px'
+                });
+                $('.row').css({
+                    'padding' : '0px'
+                });
+                visible(playRecorder);
+                let isPlayingDownload = false;
+                $("#play-recorder").click(()=>{
+                    var testAudio = document.getElementById(`recorder-${idCounter}`);
+                    testAudio.addEventListener("ended", function() 
+                    {
+                    isPlayingDownload = false;
+                    });
+                    if(isPlayingDownload === true){
+                        testAudio.pause();
+                        isPlayingDownload = false;
+                    }else{
+                        isPlayingDownload = true;
+                        testAudio.play();
+                    }
+                });
+                idCounter = idCounter + 1;
+            }     
+            volume.addEventListener('change', (evento) => {
+                var testAudio = document.getElementById(`recorder-${idCounter}`);
+                actVolume = evento.target.value;
+                testAudio.volume = (actVolume / 100);      
             });
-            $('.row').css({
-                'padding' : '0px'
-            });
-            let downloadObject = document.getElementById(`download-${idCounter}`)
-            visible(playRecorder);
-            $("#play-recorder").click(()=>{
-                let testAudio = document.getElementById(`recorder-${idCounter}`);
-                testAudio.play();
-            })
-            idCounter = idCounter + 1;
-        }
+            
+        });
     });
 });
+
