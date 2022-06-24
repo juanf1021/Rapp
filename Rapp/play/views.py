@@ -1,4 +1,3 @@
-from ctypes.wintypes import WORD
 import numbers
 from django.shortcuts import render
 import requests
@@ -14,6 +13,12 @@ def easy(request):
     beats = Beats.objects.all()
     first_beat = Beats.objects.first()
     return render(request,"templates\play\easy.html", {"beats":beats, "first": first_beat})
+
+def hard(request):
+    beats = Beats.objects.all()
+    first_beat = Beats.objects.first()
+    return render(request,"templates\play\hard\hard.html", {"beats":beats, "first": first_beat})
+
 
 def test(request):
     return render(request,"templates\play\itest.html")
@@ -39,10 +44,6 @@ def word_list(request):
     # return JsonResponse({"models_to_return": list(lista)})
     # Words.objects.all().delete()
     # return HttpResponse("deleted")
-
-def test_data(request):
-    data = Words.objects.filter(definition = "")
-    return HttpResponse(data)
 
 def words(request):
     found = False

@@ -6,6 +6,7 @@ from . import views
 
 urlpatterns = [
     path('/easy', views.easy, name="Easy"),
+    path('/hard', views.hard, name="Hard"),
     path('/test', views.test, name="Test"),
     path("/words", views.words, name="Words"),
     path('/data', views.word_list, name="Word-list"),
