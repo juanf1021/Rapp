@@ -1,3 +1,4 @@
+from statistics import mode
 from django.db import models
 
 # Create your models here.
@@ -15,6 +16,7 @@ class Beats(models.Model):
     artist = models.CharField(max_length=200)
     name = models.CharField(max_length=50)
     estallido = models.IntegerField()
+    duracion = models.FloatField()
     subido = models.DateField(auto_now_add=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     beat = models.FileField(upload_to='media')

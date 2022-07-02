@@ -1,4 +1,5 @@
-import numbers
+import wave
+from traceback import FrameSummary
 from django.shortcuts import render
 import requests
 from play.models import Words
@@ -19,9 +20,16 @@ def hard(request):
     first_beat = Beats.objects.first()
     return render(request,"templates\play\hard\hard.html", {"beats":beats, "first": first_beat})
 
+def free(request):
+    beats = Beats.objects.all()
+    first_beat = Beats.objects.first()
+    return render(request,"templates\play\libre\libre.html", {"beats":beats, "first": first_beat})
+
 
 def test(request):
-    return render(request,"templates\play\itest.html")
+    first_beat = Beats.objects.first()
+    return HttpResponse(first_beat)
+    # return render(request,"templates\play\itest.html")
 
 def mic_test(request):
     return render(request,"templates\play\mictest.html")

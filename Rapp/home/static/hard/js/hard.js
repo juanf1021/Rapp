@@ -272,7 +272,9 @@ function playTimer(){
         if (count % 5 == 0){
             visible(ir);
             visible(volver);
-            notDefined = isUndefined(datos, iterator)
+            if(firstApiWorked){
+                notDefined = isUndefined(datos, iterator);
+            }
             while(notDefined){
                 iterator++;
                 notDefined = isUndefined(datos,iterator);

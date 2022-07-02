@@ -7,7 +7,7 @@ admin.site.register(Categoria)
 
 
 class Beats_admin(admin.ModelAdmin):
-    list_display=("artist", "name", "estallido")
+    list_display=("artist", "name", "estallido","duracion")
     readonly_fields=('subido',)
     search_fields= ("artist", "name")
 
