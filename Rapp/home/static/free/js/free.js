@@ -32,10 +32,11 @@ let palabra = document.getElementById("palabra");
 let wordContainerHtml = document.getElementById("wordContainerHtml");
 let ir = document.getElementById("ir");
 let volver = document.getElementById("volver");
-let damos = document.getElementById("damos")
+let damos = document.getElementById("damos");
 let playRecorder = document.getElementById("play-recorder");
-let selectTimeBtns = document.querySelector(".btns-time-container")
-let back = document.getElementById("back-btn")
+let selectTimeBtns = document.querySelector(".btns-time-container");
+let back = document.getElementById("back-btn");
+let backHistory = document.getElementById("back-btn-full");
 
 document.addEventListener("DOMContentLoaded", ()=>{
     let audios = document.getElementById("audios");
@@ -54,12 +55,13 @@ document.addEventListener("DOMContentLoaded", ()=>{
             dataset = parseInt(this.dataset.time);
             runAll(dataset);
             visible(audios);
-            visible(back)
+            visible(back);
+            nonVisible(backHistory);
             document.querySelectorAll(".beats").forEach(option =>{
                 if(parseFloat(option.dataset.duration) > (dataset + 1)){
                     audio.src = `${option.value}`;
                     option.selected = true;
-                    visible(option)
+                    visible(option);
                 }else{
                     nonVisible(option);
                 };
@@ -185,6 +187,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         nonVisible(back);
         nonVisible(btnPlay);
         nonVisible(btnRestart);
+        visible(backHistory);
     })
 
 
