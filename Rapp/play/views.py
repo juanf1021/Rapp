@@ -1,8 +1,6 @@
-import wave
-from traceback import FrameSummary
+from email.mime import image
 from django.shortcuts import render
-import requests
-from play.models import Words
+from play.models import Words, Images
 from home.models import Categoria, Beats
 from django.http import HttpResponse
 import random
@@ -53,6 +51,31 @@ def word_list(request):
     # return JsonResponse({"models_to_return": list(lista)})
     # Words.objects.all().delete()
     # return HttpResponse("deleted")
+
+
+def imagesJson(request):
+    first_image = Images.objects.all().first()
+    second_image = Images.objects.all().last()
+    lista = []
+    number_list=[]
+    while len(number_list) < 3:
+        random_number = random.randint(first_image.id, second_image.id)
+        image =Images.objects.filter(id = random_number).values()
+        while not image:
+            random_number = random.randint(first_image.id, second_image.id)
+            image =Images.objects.filter(id = random_number).values()
+        if random_number in number_list:
+            random_number = random.randint(first_image.id, second_image.id)
+        else:
+            number_list.append(random_number)
+            image =Images.objects.filter(id = random_number).values()
+            lista.append(list(image))
+    return JsonResponse(lista, safe=False)
+
+
+
+
+
 
 # def words(request):
 #     found = False
