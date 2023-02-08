@@ -58,7 +58,7 @@ def imagesJson(request):
     second_image = Images.objects.all().last()
     lista = []
     number_list=[]
-    while len(number_list) < 3:
+    while len(number_list) < 23:
         random_number = random.randint(first_image.id, second_image.id)
         image =Images.objects.filter(id = random_number).values()
         while not image:

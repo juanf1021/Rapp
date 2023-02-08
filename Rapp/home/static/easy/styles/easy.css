@@ -519,3 +519,14 @@ input[type=range] {
   justify-content: center;
   align-items: center;
 }
+
+
+
+.start-container .image-container{
+  margin-left: 100px;
+  margin-top: -100px;
+}
+
+.start-container .image-container img{
+  border-radius: 20%
+}

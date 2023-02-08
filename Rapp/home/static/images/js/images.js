@@ -31,6 +31,7 @@ let volver = document.getElementById("volver");
 let damos = document.getElementById("damos")
 let playRecorder = document.getElementById("play-recorder");
 let image = document.getElementById("image");
+let imageCtner = document.getElementById("imageCtner");
 
 // this make the fetch request when the page is loaded
 apiSearchList();
@@ -44,6 +45,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     nonVisible(damos);
     nonVisible(playRecorder);
     nonVisible(image);
+    nonVisible(imageCtner);
 
 
 
@@ -154,7 +156,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 })
 
 function apiSearchList(){
-    fetch('https://picsum.photos/v2/list?limit=50')
+    fetch('/play/test')
   .then(response => response.json())
   .then(data =>{
         datos = data;
@@ -162,7 +164,7 @@ function apiSearchList(){
         console.log(firstApiWorked);
         console.log(data);
   })
-  .catch(error => fetchData());
+  .catch(error => console.log("not working"));
 }
 
 function fetchData(){
@@ -182,8 +184,10 @@ function fetchData(){
 function showImages(data, iterator, firstApiWorked){
     let image = document.getElementById("image");
     if(firstApiWorked){
-        imageDataUrl = data[iterator].download_url;
-        image.src = `${imageDataUrl}`
+        imageDataUrl = data[iterator][0].image;
+        image.src = `http://127.0.0.1:8000/media/${imageDataUrl}`
+        console.log(data[iterator][0])
+        console.log(iterator)
     }else{
         palabraData = data[iterator][0].word;
     }
@@ -217,12 +221,12 @@ function playTimer(){
     }else{
     // update counter an run function every second
         if (count % 10 == 0){
-            visible(ir);
-            visible(volver);
             visible(image);
             showImages(datos, iterator, firstApiWorked);
-        }
-        iterator++;
+            console.log(iterator)
+            iterator++;
+            visible(imageCtner);
+        } 
         count--;
         time = setTimeout("playTimer()", 1000);
     }
