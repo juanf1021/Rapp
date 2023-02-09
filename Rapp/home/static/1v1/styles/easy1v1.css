@@ -1,0 +1,12 @@
+.easy-container {
+  height: 80vh;
+  margin: 100px 30px 50px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  /* width: 50%; */
+}

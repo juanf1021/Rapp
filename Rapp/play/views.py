@@ -33,6 +33,14 @@ def test(request):
     return HttpResponse(first_beat)
     # return render(request,"templates\play\itest.html")
 
+
+#** views to 1v1 mode
+
+def easy1v1(request):
+    beats = Beats.objects.all()
+    first_beat = Beats.objects.first()
+    return render(request,"templates\contra\easy1v1\easy1v1.html", {"beats":beats, "first": first_beat})
+
 def word_list(request):
     # word = Words.objects.get(id = 25466)
     first_word = Words.objects.all().first()
