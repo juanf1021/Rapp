@@ -7,9 +7,15 @@
 <section>
     <div class="full-container">
     <div class="easy-container" id="easy-container">
-        <video autoplay loop muted plays-inline class="back-video">
-            <source src="{% static 'easy/media/videos/purple.mp4' %}" type="video/mp4">
-        </video>
+        <div class="video-container">
+            <video autoplay loop muted plays-inline class="back-video video">
+                <source src="{% static 'easy/media/videos/red.mp4' %}" type="video/mp4">
+            </video>
+            <video autoplay loop muted plays-inline class="back-video">
+                <source src="{% static 'easy/media/videos/lights.mp4' %}" type="video/mp4">
+            </video>
+        </div>
+
         <div class="content">
             <div class="container-back">
                 <a class="btn-solid-lg page-scroll btn-back" id="back-btn" onclick="history.back()"><i class="fa-solid fa-circle-arrow-left"></i></a>
