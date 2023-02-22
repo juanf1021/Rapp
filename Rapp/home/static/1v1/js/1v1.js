@@ -1,5 +1,5 @@
 // this is the initial value of the counter
-let count = 60;
+let count = 120;
 let time;
 let tiempo;
 let isPlaying = false;
@@ -12,15 +12,10 @@ let datos;
 let elementP;
 let textWord;
 let notDefined = false;
-let definitionElement;
 let actVolume;
-let wordObject;
-let wordDefinition;
-let palabraData;
 var firstApiWorked;
 let idCounter = 1;
-let dataset;
-let restartCount;
+let videoCount = 0;
 // these are some elements
 let seconds = document.getElementById("seconds");
 let btnPlay = document.getElementById("play");
@@ -28,56 +23,26 @@ let btnRestart = document.getElementById("restart");
 btnRestart.style.display = "none";
 let audio = document.getElementById("audio");
 let gritoTiempo = document.getElementById("grito01");
-let palabra = document.getElementById("palabra");
 let wordContainerHtml = document.getElementById("wordContainerHtml");
 let ir = document.getElementById("ir");
 let volver = document.getElementById("volver");
 let damos = document.getElementById("damos");
 let playRecorder = document.getElementById("play-recorder");
-let selectTimeBtns = document.querySelector(".btns-time-container");
-let back = document.getElementById("back-btn");
-let backHistory = document.getElementById("back-btn-full");
+
+let video1 = document.getElementById("video1");
+let video2 = document.getElementById("video2");
+
+let name1 = document.getElementById("name1");
+let name2 = document.getElementById("name2");
 
 document.addEventListener("DOMContentLoaded", ()=>{
-    let audios = document.getElementById("audios");
     nonVisible(ir);
     nonVisible(volver);
     nonVisible(damos);
     nonVisible(playRecorder);
-    nonVisible(btnPlay);
-    nonVisible(audios);
-    nonVisible(back)
-    // nonVisible(btnRestart);
-
-
-    document.querySelectorAll(".btns-time").forEach(a =>{
-        a.onclick = function(){
-            dataset = parseInt(this.dataset.time);
-            runAll(dataset);
-            visible(audios);
-            visible(back);
-            nonVisible(backHistory);
-            document.querySelectorAll(".beats").forEach(option =>{
-                if(parseFloat(option.dataset.duration) > (dataset + 1)){
-                    audio.src = `${option.value}`;
-                    option.selected = true;
-                    visible(option);
-                }else{
-                    nonVisible(option);
-                };
-            });
-    
-        };
-    });
-
-
-    function runAll(time){
-        visible(btnPlay);
-        nonVisible(selectTimeBtns);
-        count = minutesToSeconds(time); 
-        restartCount = count;
-    }
-    
+    nonVisible(name1);
+    nonVisible(name2);
+    let audios = document.getElementById("audios");
     // this check if there is a change on the audio Selection, if that happens
     // it changes the src in html
     audios.addEventListener('change', (evento) => {
@@ -88,9 +53,11 @@ document.addEventListener("DOMContentLoaded", ()=>{
         let beat = evento.target.value;
         audio.src = `${beat}`;
         resetTimer();
-        changeInner(palabra," ");
         nonVisible(btnRestart);
         visible(btnPlay);
+        deleteDivChild(wordContainerHtml);
+        nonVisible(name1);
+        nonVisible(name2);
     })
 
     btnPlay.addEventListener("click", ()=>{
@@ -99,7 +66,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
     var estallido = audios.options[audios.selectedIndex].id;
         firstClick++;
         if(!isPlaying){
-            clickBool = true;
             audio.play();
             // if its the first click then change second for text
             if (firstClick >= 1){
@@ -107,11 +73,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
             }
             if(firstClick == 1){
                 changeInner(seconds, "PREPÁRATE");
-                changeInner(palabra, " ");
             }else{
 // this avoids changing the counter too fast whe btn is clicked many times
                 count++;
-                countMusic--;     
+                countMusic--;
             }
     // this check if the program is in the 3 scnds timer
             if(startValue > 0 && startValue < 3){
@@ -122,7 +87,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 startValue++;
             }
             else if(countMusic < (estallido - 3)){
-                musicStart(dataset);
+                musicStart();
             }
             else{
                 playMusicStart();
@@ -131,7 +96,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
             isPlaying = true;
             changeInner(btnPlay, "Pause");
         }else{
-            clickBool = false;
             isPlaying = false;
             changeInner(btnPlay, "Play");
             audio.pause();
@@ -145,7 +109,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             restartTimer();
             nonVisible(ir);
             changeInner(btnPlay, "Pause");
-            changeInner(palabra, " ");
+            deleteDivChild(wordContainerHtml);
     })
     let volumeIcon = document.getElementById("volume-icon");
     let volume = document.getElementById("volume");
@@ -178,18 +142,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
         ir.href = `#${lastChild}`
     })
 
-    back.addEventListener("click", ()=>{
-        resetTimer();
-        restartValues();
-        audio.pause();
-        visible(selectTimeBtns);
-        nonVisible(audios);
-        nonVisible(back);
-        nonVisible(btnPlay);
-        nonVisible(btnRestart);
-        visible(backHistory);
-    })
-
 
 })
 
@@ -202,6 +154,7 @@ function displayTime(count){
 
 // this start the 3 scds counter and then start the 60 scnds timer
 function start(){
+    count = 120;
     displayTime(startValue);
     if (startValue == 0){
         playTimer();
@@ -221,9 +174,39 @@ function playTimer(){
         pauseTimer(time);
     }else{
     // update counter an run function every second
+        if (count % 10 == 0){
+            visible(name1);
+            visible(name2);
+            // !!Check if this is important
+            if(firstApiWorked){
+                notDefined = isUndefined(datos, iterator);
+            }
+            while(notDefined){
+                iterator++;
+                notDefined = isUndefined(datos,iterator);
+            }
+            videoCount++;
+        }
+        if(count % 12 === 0){
+            if(videoCount % 2 == 0){
+                video1.style.filter = "brightness(100%)";
+                video2.style.filter = "brightness(30%)";
+                name2.style.fontSize = "100px";
+                name1.style.fontSize = "50px";
+                //video1.style.marginLeft="20px";
+
+            }else{
+                video1.style.filter = "brightness(30%)";
+                video2.style.filter = "brightness(100%)";
+                name1.style.fontSize = "100px";
+                name2.style.fontSize = "50px";
+                //video2.style.marginRight="20px";
+            }
+        }
         iterator++;
         count--;
         time = setTimeout("playTimer()", 1000);
+
     }
 }
 
@@ -261,18 +244,20 @@ function pauseTimer(timeValue){
 // this restart the values inside of it
 function restartValues(){
     startValue = 3;
-    count = restartCount;
+    count = 120;
     firstClick = 0;
     countMusic = 0;
 }
 
-function minutesToSeconds(minutes){
-    let converted = minutes * 60;
-    return converted;
+
+// this deletes all childs from a div
+function deleteDivChild(father){
+    let child = father.lastChild;
+    while(child){
+        father.removeChild(child);
+        child = father.lastElementChild;
+    }
 }
-
-
-
 
 function lastChildId(father){
     let child = father.lastElementChild;
@@ -287,12 +272,13 @@ function restartTimer(){
     restartValues();
     musicStart();
     changeInner(seconds, "PREPÁRATE");
-    changeInner(palabra, " ");
     isPlaying = true;
     visible(btnPlay);
     audio.currentTime = 0;
     audio.play();
     changeInner(btnPlay, "Pause");
+    nonVisible(name1);
+    nonVisible(name2);
 }
 
 // this reset the timer but doesnt play it
@@ -301,7 +287,6 @@ function resetTimer(){
     restartValues();
     isPlaying = false;
     changeInner(btnPlay, "Play");
-    changeInner(palabra, " ");
     changeInner(seconds, "START");
 }
 
@@ -317,13 +302,12 @@ function musicStart(){
         nonVisible(damos);
         start()
     }
-    if(countMusic == (((minutesToSeconds(dataset) + 10) + estallido)-3)){
+    if(countMusic == ((130 + estallido)-3)){
         gritoTiempo.play();
     }
-    if(countMusic == ((minutesToSeconds(dataset) + 10) + estallido)){
+    if(countMusic == (130 + estallido)){
         audio.pause();
         changeInner(seconds, "TIEMPO!!!");
-        changeInner(palabra, " ");
     }
     else{
         timeMusic = setTimeout("musicStart()", 1000);
@@ -334,10 +318,9 @@ function musicStart(){
 function playMusicStart(){
     var estallido = audios.options[audios.selectedIndex].id;
     estallido = parseInt(estallido);
-    if(countMusic == ((minutesToSeconds(dataset) + 10) + estallido)){
+    if(countMusic == (130 + estallido)){
         audio.pause();
         changeInner(seconds, "TIEMPO!!!");
-        changeInner(palabra, " ");
     }
     else{
         countMusic++;

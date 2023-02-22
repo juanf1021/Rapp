@@ -8,11 +8,11 @@
     <div class="full-container">
     <div class="easy-container" id="easy-container">
         <div class="video-container">
-            <video autoplay loop muted plays-inline class="back-video video">
-                <source src="{% static 'easy/media/videos/red.mp4' %}" type="video/mp4">
+            <video autoplay loop muted plays-inline class="back-video video" id="video1">
+                <source src="{% static 'hard/media/videos/purplesea.mp4' %}" type="video/mp4">
             </video>
-            <video autoplay loop muted plays-inline class="back-video">
-                <source src="{% static 'easy/media/videos/lights.mp4' %}" type="video/mp4">
+            <video autoplay loop muted plays-inline class="back-video" id="video2">
+                <source src="{% static 'easy/media/videos/red.mp4' %}" type="video/mp4">
             </video>
         </div>
 
@@ -22,7 +22,9 @@
             </div>
             <div class="start-container">
                 <div class="seconds-container">
+                    <h6 class="name first" id="name1">JUAN</h6>
                     <h5 id="seconds">START</h2>
+                    <h6 class="name second" id="name2">ANZEL</h6>
                     <h6 id="damos">SE LO DAMOS EN...</h6>
                 </div>
                 <div class="palabra-container">
@@ -72,7 +74,7 @@
     </div>
     <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
     <script src="{% static 'easy/js/recorder.js' %}"></script>
-    <script src="{% static 'easy/js/timer.js' %}"></script>
+    <script src="{% static '1v1/js/1v1.js' %}"></script>
     <!-- <script src="{% static 'easy/js/jqueryChange.js' %}"></script> -->
 </section>
 
