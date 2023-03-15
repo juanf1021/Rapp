@@ -1,3 +1,6 @@
+
+
+
 // this is the initial value of the counter
 let count = 120;
 let time;
@@ -34,6 +37,13 @@ let video2 = document.getElementById("video2");
 
 let name1 = document.getElementById("name1");
 let name2 = document.getElementById("name2");
+const names = [name1, name2]; 
+
+let game = document.getElementById("1v1");
+let send = document.getElementById("send");
+let nombres = document.getElementById("nombres");
+    
+
 
 document.addEventListener("DOMContentLoaded", ()=>{
     nonVisible(ir);
@@ -42,6 +52,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
     nonVisible(playRecorder);
     nonVisible(name1);
     nonVisible(name2);
+    nonVisible(game);
+    
     let audios = document.getElementById("audios");
     // this check if there is a change on the audio Selection, if that happens
     // it changes the src in html
@@ -140,10 +152,33 @@ document.addEventListener("DOMContentLoaded", ()=>{
     ir.addEventListener("click", ()=> {
         let lastChild = lastChildId(wordContainerHtml);
         ir.href = `#${lastChild}`
-    })
+    });
 
 
-})
+
+    nombres.addEventListener("keydown",(event)=>{
+        if(event.key == "Enter"){
+            event.preventDefault();
+            const index = [...nombres].indexOf(event.target);
+            if(index == nombres.elements.length - 2) { // check if current element is the last input
+                changeGame(nombres, names);
+            } else {
+                nombres.elements[index + 1].focus(); // focus on the next input element
+            }
+    }
+});
+
+    // this happens when the send btn for asking names is clicked
+    send.addEventListener("click",()=>{
+        // nombres for taking the elements of ther Form
+        // names is a list with the player names
+        changeGame(nombres, names);
+        
+    });
+
+
+});
+
 
 
 
@@ -329,6 +364,37 @@ function playMusicStart(){
 }
 
 
+function validateNames(names){
+    for(let i=0; i<2; i++ ){
+        if((names.elements[i].value.length) > 7){
+            names.elements[i].style.color ="red";
+            return false
+        }else{
+            return true
+        };      
+    }
+    
+}
+
+function changeGame(nombres,names){
+        // this is a second step verification for checking 
+        // the lenght of names are not bigger than 8
+        // if everything's all right then hide the name section and show the 1v1 mode
+    if(validateNames(nombres)){
+        nonVisible(info);
+        game.style.display = "block";
+        for(let i=0; i<2; i++){
+            // this checks if whe deleting all blank spaces you have a blanks space instead of a string then replace the name of the playe to MC 1
+            if((nombres.elements[i].value).replace(/\s/g, '')===''){
+                changeInner(names[i], `MC ${i+1}`);
+            }else{
+                changeInner(names[i], (nombres.elements[i].value).toUpperCase());
+            }; 
+        }}
+    else{
+        console.log("Error");
+    };
+}
 
 
 

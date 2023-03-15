@@ -41,6 +41,10 @@ def easy1v1(request):
     first_beat = Beats.objects.first()
     return render(request,"templates\contra\easy1v1\easy1v1.html", {"beats":beats, "first": first_beat})
 
+# def tournament(request):
+#     return render(request,"templates\contra\easy1v1\easy1v1.html", {"beats":beats, "first": first_beat})
+
+
 def word_list(request):
     # word = Words.objects.get(id = 25466)
     first_word = Words.objects.all().first()

@@ -13,6 +13,7 @@ urlpatterns = [
     path('/data', views.word_list, name="Word-list"),
     #**1v1 urls
     path('/1v1', views.easy1v1, name="Easy1v1"),
+    # path('/tournament', views.tournament, name="Tournament"),
     # path('/mic', views.mic_test, name="Mic")
     # path("/words", views.words, name="Words"),
 ]
