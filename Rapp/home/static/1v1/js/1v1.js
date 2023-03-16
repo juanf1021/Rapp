@@ -55,9 +55,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
     nonVisible(game);
     
     let audios = document.getElementById("audios");
-    // this check if there is a change on the audio Selection, if that happens
+    // this checks if there is a change on the audio Selection, if that happens
     // it changes the src in html
     audios.addEventListener('change', (evento) => {
+        clearInterval(intervalId);
         restartValues();
         nonVisible(ir);
         nonVisible(volver);
@@ -104,6 +105,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             else{
                 playMusicStart();
                 playTimer();
+                startTimer();
             }
             isPlaying = true;
             changeInner(btnPlay, "Pause");
@@ -193,6 +195,7 @@ function start(){
     displayTime(startValue);
     if (startValue == 0){
         playTimer();
+        startTimer();
     }else{
             startValue--;
             time = setTimeout("start()", 1000);
@@ -209,7 +212,7 @@ function playTimer(){
         pauseTimer(time);
     }else{
     // update counter an run function every second
-        if (count % 10 == 0){
+        if (count % 10 === 0){
             visible(name1);
             visible(name2);
             // !!Check if this is important
@@ -222,22 +225,7 @@ function playTimer(){
             }
             videoCount++;
         }
-        if(count % 12 === 0){
-            if(videoCount % 2 == 0){
-                video1.style.filter = "brightness(100%)";
-                video2.style.filter = "brightness(30%)";
-                name2.style.fontSize = "100px";
-                name1.style.fontSize = "50px";
-                //video1.style.marginLeft="20px";
 
-            }else{
-                video1.style.filter = "brightness(30%)";
-                video2.style.filter = "brightness(100%)";
-                name1.style.fontSize = "100px";
-                name2.style.fontSize = "50px";
-                //video2.style.marginRight="20px";
-            }
-        }
         iterator++;
         count--;
         time = setTimeout("playTimer()", 1000);
@@ -269,6 +257,7 @@ function changeInner(element,text){
 function pauseAllTimers(){
     pauseTimer(time);
     pauseTimer(timeMusic);
+    clearInterval(intervalId);
 }
 
 // this pause the timer
@@ -282,6 +271,10 @@ function restartValues(){
     count = 120;
     firstClick = 0;
     countMusic = 0;
+    totalTime = 120; // 120 seconds
+    currentTime = 0;
+    intervalId = null;
+    contador = 1;
 }
 
 
@@ -398,7 +391,47 @@ function changeGame(nombres,names){
 
 
 
+let totalTime = 120; // 120 seconds
+let currentTime = 0;
+let intervalId = null;
+let contador = 1;
 
+function startTimer() {
+  intervalId = setInterval(function() {
+    currentTime += 10; // increase by 10 milliseconds
+    let seconds = Math.floor(currentTime / 1000);
+    let milliseconds = currentTime % 1000;
+    let time = [seconds, milliseconds];
+    
+    // console.log(("0" + seconds).slice(-2) + ":" + ("00" + milliseconds).slice(-3));
+    console.log(time[0] + ":" + time[1]);
+
+    if (currentTime >= totalTime * 1000) {
+      clearInterval(intervalId);
+      console.log("Time's up!");
+    }
+
+    if(time[0] === (11 * contador) && time[1]>= 490){
+        if(videoCount % 2 == 0){
+            video1.style.filter = "brightness(100%)";
+            video2.style.filter = "brightness(30%)";
+            name2.style.fontSize = "100px";
+            name1.style.fontSize = "50px";
+            //video1.style.marginLeft="20px";
+
+        }else{
+            video1.style.filter = "brightness(30%)";
+            video2.style.filter = "brightness(100%)";
+            name1.style.fontSize = "100px";
+            name2.style.fontSize = "50px";
+            //video2.style.marginRight="20px";
+        }
+        contador++;
+        
+    }
+    console.log(contador);
+  }, 10); // update every 10 milliseconds
+}
 
 
 
