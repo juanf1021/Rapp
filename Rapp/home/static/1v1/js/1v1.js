@@ -42,7 +42,7 @@ const names = [name1, name2];
 let game = document.getElementById("1v1");
 let send = document.getElementById("send");
 let nombres = document.getElementById("nombres");
-    
+var duration = [];
 
 
 document.addEventListener("DOMContentLoaded", ()=>{
@@ -53,11 +53,15 @@ document.addEventListener("DOMContentLoaded", ()=>{
     nonVisible(name1);
     nonVisible(name2);
     nonVisible(game);
-    
+    // the start duration from firstbeat converten into an array with separateString()
+    duration = separateString(audio.dataset.duration);
     let audios = document.getElementById("audios");
     // this checks if there is a change on the audio Selection, if that happens
     // it changes the src in html
     audios.addEventListener('change', (evento) => {
+        // takes the duration of the beat to change and makes it an array wit scnd and mlscnds
+        elemento = evento.target.options[evento.target.selectedIndex].dataset.duration;
+        duration = separateString(elemento);
         clearInterval(intervalId);
         restartValues();
         nonVisible(ir);
@@ -71,7 +75,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         deleteDivChild(wordContainerHtml);
         nonVisible(name1);
         nonVisible(name2);
-    })
+    });
 
     btnPlay.addEventListener("click", ()=>{
     // when play bnt is clicked, checks if isPlaying is false and the play timer function start
@@ -105,7 +109,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             else{
                 playMusicStart();
                 playTimer();
-                startTimer();
+                startTimer(duration);
             }
             isPlaying = true;
             changeInner(btnPlay, "Pause");
@@ -177,8 +181,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
         changeGame(nombres, names);
         
     });
-
-
 });
 
 
@@ -195,7 +197,7 @@ function start(){
     displayTime(startValue);
     if (startValue == 0){
         playTimer();
-        startTimer();
+        startTimer(duration);
     }else{
             startValue--;
             time = setTimeout("start()", 1000);
@@ -274,7 +276,7 @@ function restartValues(){
     totalTime = 120; // 120 seconds
     currentTime = 0;
     intervalId = null;
-    contador = 1;
+    contador = 0;
 }
 
 
@@ -394,24 +396,22 @@ function changeGame(nombres,names){
 let totalTime = 120; // 120 seconds
 let currentTime = 0;
 let intervalId = null;
-let contador = 1;
+let contador = 0;
 
-function startTimer() {
+function startTimer(duration) {
   intervalId = setInterval(function() {
     currentTime += 10; // increase by 10 milliseconds
     let seconds = Math.floor(currentTime / 1000);
     let milliseconds = currentTime % 1000;
     let time = [seconds, milliseconds];
     
-    // console.log(("0" + seconds).slice(-2) + ":" + ("00" + milliseconds).slice(-3));
-    console.log(time[0] + ":" + time[1]);
-
     if (currentTime >= totalTime * 1000) {
       clearInterval(intervalId);
-      console.log("Time's up!");
     }
-
-    if(time[0] === (11 * contador) && time[1]>= 490){
+    // this checks if the time where the beat changes its right with the counter so it can change the color and size of 1v1
+    // duratio[0] are the second of the change in beat from database and duration[1] are milliseconds while time[i] its the time from counter
+    if((time[0] === (duration[0] * contador) && time[1]>= duration[1])||(time[0] === 0 && time[1]<= 10)){
+        //console.log(time[0] + ":" + time[1]);
         if(videoCount % 2 == 0){
             video1.style.filter = "brightness(100%)";
             video2.style.filter = "brightness(30%)";
@@ -429,11 +429,29 @@ function startTimer() {
         contador++;
         
     }
-    console.log(contador);
   }, 10); // update every 10 milliseconds
 }
 
 
+// this function takes an string as an argument and divides taking a . as a reference then puts both parts into diferent indexes of a list, return the list
+function separateString(string){
+    let duration = []
+    let seconds = "";
+    let milliseconds = "";
+    for(i=0; i<string.length; i++){
+        if(string[i] === '.'){
+            for(j=0; j<i; j++){
+                seconds += string[j];
+            };
+            for(j=i+1; j<string.length; j++){
+                milliseconds += string[j];
+            };
+        };
+    };
+    duration[0]= parseInt(seconds);
+    duration[1] = parseInt(milliseconds);
+    return duration;
+}
 
 
 
