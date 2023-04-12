@@ -46,13 +46,7 @@ var duration = [];
 
 
 document.addEventListener("DOMContentLoaded", ()=>{
-    nonVisible(ir);
-    nonVisible(volver);
-    nonVisible(damos);
-    nonVisible(playRecorder);
-    nonVisible(name1);
-    nonVisible(name2);
-    nonVisible(game);
+    nonVisible(ir,volver,damos,playRecorder,name1,name2,game);
     // the start duration from firstbeat converten into an array with separateString()
     duration = separateString(audio.dataset.duration);
     let audios = document.getElementById("audios");
@@ -64,17 +58,13 @@ document.addEventListener("DOMContentLoaded", ()=>{
         duration = separateString(elemento);
         clearInterval(intervalId);
         restartValues();
-        nonVisible(ir);
-        nonVisible(volver);
+        nonVisible(ir,volver,btnRestart,name1,name2);
         audio = document.getElementById("audio");
         let beat = evento.target.value;
         audio.src = `${beat}`;
         resetTimer();
-        nonVisible(btnRestart);
         visible(btnPlay);
         deleteDivChild(wordContainerHtml);
-        nonVisible(name1);
-        nonVisible(name2);
     });
 
     btnPlay.addEventListener("click", ()=>{
@@ -94,6 +84,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
 // this avoids changing the counter too fast whe btn is clicked many times
                 count++;
                 countMusic--;
+                currentTime -= 1000;
+                //!!add  the same for the other timer
             }
     // this check if the program is in the 3 scnds timer
             if(startValue > 0 && startValue < 3){
@@ -209,7 +201,7 @@ function playTimer(){
     displayTime(count);
     // if counter 0 then stop and make playbtn not visible
     if (count == 0){
-        nonVisible(btnPlay);
+        nonVisible(btnPlay,name1,name2);
         changeInner(seconds, "ÚLTIMA!!!");
         pauseTimer(time);
     }else{
@@ -242,8 +234,10 @@ function capitalize(word){
 }
 
 // this makes an element not visible
-function nonVisible(element){
-    element.style.display = "none";
+function nonVisible(){
+    for(let i = 0; i < arguments.length; i++){
+        arguments[i].style.display = "none";
+    }
 }
 
 // this makes an element visible
@@ -307,8 +301,7 @@ function restartTimer(){
     audio.currentTime = 0;
     audio.play();
     changeInner(btnPlay, "Pause");
-    nonVisible(name1);
-    nonVisible(name2);
+    nonVisible(name1,name2);
 }
 
 // this reset the timer but doesnt play it
@@ -404,14 +397,16 @@ function startTimer(duration) {
     let seconds = Math.floor(currentTime / 1000);
     let milliseconds = currentTime % 1000;
     let time = [seconds, milliseconds];
-    
+    //console.log(time[0] + ":" + time[1]);
     if (currentTime >= totalTime * 1000) {
       clearInterval(intervalId);
     }
     // this checks if the time where the beat changes its right with the counter so it can change the color and size of 1v1
     // duratio[0] are the second of the change in beat from database and duration[1] are milliseconds while time[i] its the time from counter
     if((time[0] === (duration[0] * contador) && time[1]>= duration[1])||(time[0] === 0 && time[1]<= 10)){
-        //console.log(time[0] + ":" + time[1]);
+        console.log(currentTime);
+        console.log(time[0] + ":" + time[1]);
+        console.log("Axelgei");
         if(videoCount % 2 == 0){
             video1.style.filter = "brightness(100%)";
             video2.style.filter = "brightness(30%)";
@@ -428,6 +423,14 @@ function startTimer(duration) {
         }
         contador++;
         
+    }
+    if(time[0] == 22 && time[1] == 470){
+        console.log(duration[1]);
+        duration[1]-= 1000;
+        console.log(duration[1]);
+        // currentTime += 300;
+        // console.log(time[0] + ":" + time[1]);
+        // console.log("axelini");
     }
   }, 10); // update every 10 milliseconds
 }
