@@ -1,0 +1,51 @@
+{% extends 'layouts/layout-play.html' %}
+{% load static %}
+
+{% block body %}
+
+<!-- start select section -->
+<section id="play">
+    <div class="select-container">
+    <div class="selec-container">
+        <div class="feature">
+            <img class="feature-img" src="{% static 'home/media/purple-4.jpg' %}" alt="">
+            <div class="content">
+                <h3>Easy Mode</h3>
+                <a id="easy_multi" class="btn-solid-lg page-scroll" href="{% url 'Multi' channel='easy_1' %}">Play</a>
+            </div>
+        </div>
+        <div class="feature">
+            <img class="feature-img" src="{% static 'home/media/purple-5.jpg' %}" alt="">
+            <div class="content">
+                <h3>Hard mode</h3>
+                <a class="btn-solid-lg page-scroll" href="{% url 'Hard' %}">Play</a>
+            </div>
+        </div>
+        <div class="feature">
+            <img  class="feature-img"src="{% static 'home/media/purple-2.jpg' %}" alt="">
+            <div class="content">
+                <h3>Free Mode</h3>
+                <a class="btn-solid-lg page-scroll" href="{% url 'Free' %}">Play</a>
+            </div>
+        </div>
+        <div class="feature">
+            <img  class="feature-img"src="{% static 'home/media/purple-6.jpg' %}" alt="">
+            <div class="content">
+                <h3>1 VS 1</h3>
+                <a class="btn-solid-lg page-scroll" href="{% url 'Easy1v1' %}">Play</a>
+            </div>
+        </div>
+        <div class="feature">
+            <img  class="feature-img"src="{% static 'home/media/purple-3.jpg' %}" alt="">
+            <div class="content">
+                <!-- <h3>Multiplayer</h3> -->
+                <h3>Images</h3>
+                <a class="btn-solid-lg page-scroll" href="{% url 'Images' %}">Play</a>
+            </div>
+        </div>
+        
+    </div>
+    </div>
+    </section>
+    
+{% endblock %}
