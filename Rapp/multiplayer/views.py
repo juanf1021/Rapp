@@ -6,6 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from agora_token_builder import RtcTokenBuilder
 from django.http import JsonResponse
 from .models import Channel
+from home import models
 import random 
 import time
 # Create your views here.
@@ -25,7 +26,9 @@ def token(request,channel):
     #return JsonResponse({'channel':channelName}, safe=False)
 
 def lobby(request):
-    return render(request, 'multi/lobby.html')
+    beats = models.Beats.objects.all()
+    first_beat = models.Beats.objects.first()
+    return render(request,"templates\play\easy.html", {"beats":beats, "first": first_beat})
 
 def room(request):
     return render(request, 'multi/room.html')
