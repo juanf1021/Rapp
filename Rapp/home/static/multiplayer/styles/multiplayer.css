@@ -1,3 +1,61 @@
-#join{
-    display: ;
+body{
+      overflow-x: hidden;
+}
+.easy-container .content .start-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+}
+  
+.easy-container .content .start-container .centro {
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    flex-direction: row;
+    
+}
+  
+.easy-container .content .start-container .centro .left{
+    margin-right: 150px;
+    background:linear-gradient(rgba(31, 28, 28, 0.24),rgba(5, 5, 5, 0.993)) ,url('../media/videos/purple-6.jpg');
+}
+
+.easy-container .content .start-container .centro .right{
+    margin-left: 150px;
+    background:linear-gradient(rgba(31, 28, 28, 0.24),rgba(5, 5, 5, 0.993)) ,url('../media/videos/purple-5.jpg');
+
+}
+.easy-container .content .start-container .centro .players h8{
+    margin: 0;
+    font-size: 3.5rem !important;
+    min-width: 0;
+    line-height: 3rem;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.easy-container .content .start-container .centro .players{
+    
+     /* change this for users in future */
+    /* background:linear-gradient(rgba(0, 0, 0, 0.527),rgba(5, 5, 5, 0.993)) ,url('../media/videos/purple-3.jpg'); */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 590px !important;
+    height: 300px;
+    border-radius: 50%;
+    border: 5px solid #592ac5;
+    background-color: black;
+    padding: 1rem;
+}
+  
+/* fixing css for buttons */
+
+.multiplayer .easy-container .content {
+   margin-top: -25rem;
+}
+.multiplayer .easy-container .content .down-part{
+    margin-top: -23rem;
 }

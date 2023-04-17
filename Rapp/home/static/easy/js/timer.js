@@ -38,6 +38,7 @@ window.onload = async function ()
 {
     let response = await fetch(`/play/data`);
     datos = await response.json();
+    console.error(" ka;jsdlokajsdlokasd");
 }
 document.addEventListener("DOMContentLoaded", ()=>{
     nonVisible(ir);
@@ -200,13 +201,6 @@ function cleanDefinition(definition){
 }
 
 
-// this changes the word displayed
-function showWordList(data, iterator){
-    let palabra = document.getElementById("palabra");
-    palabraData = data[iterator][0].word;
-    palabra.innerHTML = palabraData.toUpperCase();
-}
-
 function displayTime(count){
     seconds.innerHTML = count;
     // update the timer html
@@ -302,6 +296,11 @@ function lastChildId(father){
     return lastChildId
 }
 
+function showWordList(data, iterator){
+    let palabra = document.getElementById("palabra");
+    palabraData = data[iterator][0].word;
+    palabra.innerHTML = palabraData.toUpperCase();
+}
 
 // this restart the timer and make the btn visible
 function restartTimer(){
@@ -326,6 +325,8 @@ function resetTimer(){
     changeInner(palabra, " ");
     changeInner(seconds, "START");
 }
+
+
 
 function musicStart(){
     var estallido = audios.options[audios.selectedIndex].id;
@@ -352,6 +353,7 @@ function musicStart(){
     }
     countMusic++;
 }
+
 
 function playMusicStart(){
     var estallido = audios.options[audios.selectedIndex].id;

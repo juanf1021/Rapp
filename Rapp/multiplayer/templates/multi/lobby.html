@@ -4,14 +4,15 @@
 {% block body %}
 
 <!-- start select section -->
-<section id="play">
+
+<section id="lobby-section" >
     <div class="select-container">
     <div class="selec-container">
         <div class="feature">
             <img class="feature-img" src="{% static 'home/media/purple-4.jpg' %}" alt="">
             <div class="content">
                 <h3>Easy Mode</h3>
-                <a id="join"  class="btn-solid-lg page-scroll">Play</a>
+                <a id="joinnn"  class="btn-solid-lg page-scroll">Play</a>
 
             </div>
         </div>
@@ -50,12 +51,12 @@
 
     <script type="text/javascript" src="{% static 'assets/AgoraRTC_N-4.17.0.js' %}"></script>
 
-    <script  src="{% static 'multiplayer/js/multiChannel.js' %}"></script>
+    
     <!-- <script  src="{% static 'multiplayer/js/voiceChat.js' %}"></script> -->
 </section>
 
 
-<section id="easy">
+<section id="easy" class="multiplayer">
     <div class="easy-container" id="easy-container">
         <video autoplay loop muted plays-inline class="back-video">
             <source src="{% static 'easy/media/videos/purple.mp4' %}" type="video/mp4">
@@ -65,15 +66,24 @@
                 <a class="btn-solid-lg page-scroll btn-back" id="back-btn" onclick="history.back()"><i class="fa-solid fa-circle-arrow-left"></i></a>
             </div>
             <div class="start-container">
-                <div class="seconds-container">
-                    <h5 id="seconds">START</h2>
-                    <h6 id="damos">SE LO DAMOS EN...</h6>
+                <div class="centro">
+                    <div id="players"class="players left">
+                        <h8 id="player1">Anzelino</h8>
+                    </div>
+                    <div class="seconds-container center">
+                        <h5 id="seconds">START</h2>
+                        <h6 id="damos">SE LO DAMOS EN...</h6>
+                    </div>
+                    <div class="players right">
+                        <h8 id="player2">Juan</h8>
+                    </div>
                 </div>
                 <div class="palabra-container">
                     <p id="palabra"></p>
                 </div>
             </div>
-            <div class="buttons">
+        <div class="down-part">
+            <div class="buttons multi">
             <div class="btns-play">
                 <div class="holder">
                     <div data-role="controls">
@@ -84,6 +94,7 @@
                 <a class="btn-solid-lg page-scroll" id="restart">Restart</a>
                 <i class="fa-solid fa-volume-high" id="volume-icon"></i>
                 <input type="range" value="100" id="volume" class="range-volume">
+            </div>
             </div>
             <div class="audio">
                 <select  class="audio-selection" name="audios" id="audios">
@@ -97,9 +108,9 @@
                 </div>
                 <audio src="{{ first.beat.url }}" id="audio"></audio>
                 <audio src="{% static 'easy/audios/gritoTiempo.mp3' %}" id="grito01"></audio>
-            </div>
-           </div>   
+            </div> 
         </div>
+    </div>
     </div>
     <div class="ir-container">
         <div class="btn-words">
@@ -116,8 +127,13 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
     <script src="{% static 'easy/js/recorder.js' %}"></script>
     <script src="{% static 'easy/js/timer.js' %}"></script>
-    <!-- <script src="{% static 'easy/js/functions.js' %}"></script> -->
 </section>
 
-    
+<link rel="stylesheet" href="{% static 'multiplayer/styles/multiplayer.css' %}">
+
+
+
+<script  src="{% static 'multiplayer/js/multiChannel.js' %}"></script>
+
+
 {% endblock %}

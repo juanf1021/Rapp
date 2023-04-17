@@ -70,6 +70,33 @@ export function lastChildId(father){
 }
 
 
+let countMusic = 0;
+export function musicStart(){
+    var estallido = audios.options[audios.selectedIndex].id;
+    estallido = parseInt(estallido);
+    if (countMusic == (estallido - 5)){
+        visible(damos);
+        nonVisible(seconds);
+    }
+    if (countMusic == (estallido - 3)){
+        visible(seconds);
+        nonVisible(damos);
+        start()
+    }
+    if(countMusic == ((70 + estallido)-3)){
+        gritoTiempo.play();
+    }
+    if(countMusic == (70 + estallido)){
+        audio.pause();
+        changeInner(seconds, "TIEMPO!!!");
+        changeInner(palabra, " ");
+    }
+    else{
+        timeMusic = setTimeout("musicStart()", 1000);
+    }
+    countMusic++;
+}
+
 
 
 

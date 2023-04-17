@@ -28,7 +28,7 @@ def token(request,channel):
 def lobby(request):
     beats = models.Beats.objects.all()
     first_beat = models.Beats.objects.first()
-    return render(request,"templates\play\easy.html", {"beats":beats, "first": first_beat})
+    return render(request,"multi/lobby.html", {"beats":beats, "first": first_beat})
 
 def room(request):
     return render(request, 'multi/room.html')
