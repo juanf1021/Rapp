@@ -70,14 +70,13 @@
                 <div class="start-container">
                     <div class="centro">
                         <div id="players" class="players left">
-                            <h8 id="player1">Anzelino</h8>
+                            <h8 id="player1"></h8>
                         </div>
-                        <div class="seconds-container center">
-                            <h5 id="seconds">START</h2>
-                                <h6 id="damos">SE LO DAMOS EN...</h6>
+                        <div class="seconds-container center" id="principal-text">
+                            <h5 class="start" id="seconds">START</h2>
                         </div>
                         <div class="players right">
-                            <h8 id="player2">JuanF10</h8>
+                            <h8 id="player2"></h8>
                         </div>
                     </div>
                     <div class="palabra-container">
@@ -97,8 +96,9 @@
                             <i class="fa-solid fa-volume-high" id="volume-icon"></i>
                             <input type="range" value="100" id="volume" class="range-volume">
                             <div class="btn-words">
-                                <a class="btn-solid-lg page-scroll" id="volver" href="#easy-container"><i class="fa-solid fa-chevron-left"></i></a>
-                           </div>
+                                <a class="btn-solid-lg page-scroll" id="volver" href="#header"><i
+                                        class="fa-solid fa-pen"></i></a>
+                            </div>
                         </div>
                     </div>
                     <div class="audio">
@@ -120,11 +120,15 @@
             </div>
         </div>
         <div class="used-words-container" id="wordContainerHtml">
+            <div id="wait-image" class="image-container">
+                <img class="img-fluid" src="{% static 'multiplayer/media/videos/rappx.png' %}" alt="alternative">
+                <p>"Music is like magic. There's a certain feeling you get when you real and you spit and people are
+                    feelin' your shit." - Eminem</p>
+            </div>
         </div>
-    </div>
-    <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
-    <script src="{% static 'easy/js/recorder.js' %}"></script>
-    <script src="{% static 'multiplayer/js/multiEasy.js' %}"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
+        <script src="{% static 'easy/js/recorder.js' %}"></script>
+        <script src="{% static 'multiplayer/js/multiEasy.js' %}"></script>
 </section>
 
 <link rel="stylesheet" href="{% static 'multiplayer/styles/multiplayer.css' %}">

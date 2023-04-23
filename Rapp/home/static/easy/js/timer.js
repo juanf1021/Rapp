@@ -30,7 +30,6 @@ let palabra = document.getElementById("palabra");
 let wordContainerHtml = document.getElementById("wordContainerHtml");
 let ir = document.getElementById("ir");
 let volver = document.getElementById("volver");
-let damos = document.getElementById("damos")
 let playRecorder = document.getElementById("play-recorder");
 
 
@@ -43,7 +42,6 @@ window.onload = async function ()
 document.addEventListener("DOMContentLoaded", ()=>{
     nonVisible(ir);
     nonVisible(volver);
-    nonVisible(damos);
     nonVisible(playRecorder);
     let audios = document.getElementById("audios");
     // this check if there is a change on the audio Selection, if that happens
@@ -75,6 +73,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             }
             if(firstClick == 1){
                 changeInner(seconds, "PREPÁRATE");
+                seconds.className = "preparate";
                 changeInner(palabra, " ");
             }else{
 // this avoids changing the counter too fast whe btn is clicked many times
@@ -203,6 +202,7 @@ function cleanDefinition(definition){
 
 function displayTime(count){
     seconds.innerHTML = count;
+    seconds.className = "seconds";
     // update the timer html
 }
 
@@ -225,6 +225,7 @@ function playTimer(){
     if (count == 0){
         nonVisible(btnPlay);
         changeInner(seconds, "ÚLTIMA!!!");
+        seconds.className = "ultima";
         pauseTimer(time);
     }else{
     // update counter an run function every second
@@ -332,12 +333,10 @@ function musicStart(){
     var estallido = audios.options[audios.selectedIndex].id;
     estallido = parseInt(estallido);
     if (countMusic == (estallido - 5)){
-        visible(damos);
-        nonVisible(seconds);
+        changeInner(seconds, "SE LO DAMOS EN...");
+        seconds.className = "damos";
     }
     if (countMusic == (estallido - 3)){
-        visible(seconds);
-        nonVisible(damos);
         start()
     }
     if(countMusic == ((70 + estallido)-3)){
@@ -346,6 +345,7 @@ function musicStart(){
     if(countMusic == (70 + estallido)){
         audio.pause();
         changeInner(seconds, "TIEMPO!!!");
+        seconds.className = "tiempo";
         changeInner(palabra, " ");
     }
     else{

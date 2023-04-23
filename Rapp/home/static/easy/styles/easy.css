@@ -38,9 +38,35 @@
   align-items: center;
   flex-direction: column; */
 }
-.easy-container .content h5 {
+
+.easy-container .content .start-container .seconds-container h5 {
   font-size: 220px;
 }
+
+.easy-container .content .start-container .seconds-container .start {
+  font-size: 220px;
+}
+
+.easy-container .content .start-container .seconds-container .preparate {
+  font-size: 140px;
+}
+
+.easy-container .content .start-container .seconds-container .seconds {
+  font-size: 220px;
+}
+
+.easy-container .content .start-container .seconds-container .damos {
+  font-size: 80px;
+}
+
+.easy-container .content .start-container .seconds-container .ultima {
+  font-size: 150px;
+}
+
+.easy-container .content .start-container .seconds-container .tiempo {
+  font-size: 150px;
+}
+
 
 .easy-container .content .start-container {
   margin-top: 170px;
@@ -53,7 +79,7 @@
 .easy-container .content .start-container .seconds-container h6 {
   position: relative;
   margin: 0;
-  font-size: 10rem;
+  font-size: 20px;
 }
 
 .easy-container .content .seconds-container {
